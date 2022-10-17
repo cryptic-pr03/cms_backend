@@ -3,7 +3,7 @@ package com.example.cms.Models;
 public class BankDetails {
 
     private int accountNo;
-    private int IFSCCode;
+    private int IfscCode;
     private String bankName;
     private String branchName;
     private int userId;
@@ -12,9 +12,9 @@ public class BankDetails {
 
     }
 
-    public BankDetails(int accountNo, int IFSCCode, String bankName, String branchName, int userId) {
+    public BankDetails(int accountNo, int IfscCode, String bankName, String branchName, int userId) {
         this.accountNo = accountNo;
-        this.IFSCCode = IFSCCode;
+        this.IfscCode = IfscCode;
         this.bankName = bankName;
         this.branchName = branchName;
         this.userId = userId;
@@ -28,12 +28,12 @@ public class BankDetails {
         this.accountNo = accountNo;
     }
 
-    public int getIFSCCode() {
-        return IFSCCode;
+    public int getIfscCode() {
+        return IfscCode;
     }
 
-    public void setIFSCCode(int IFSCCode) {
-        this.IFSCCode = IFSCCode;
+    public void setIfscCode(int IfscCode) {
+        this.IfscCode = IfscCode;
     }
 
     public String getBankName() {
@@ -58,5 +58,16 @@ public class BankDetails {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "BankDetails{" +
+                "accountNo=" + accountNo +
+                ", IfscCode=" + IfscCode +
+                ", bankName='" + bankName + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }

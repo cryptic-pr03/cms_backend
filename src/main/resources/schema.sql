@@ -6,7 +6,7 @@ create table if not exists User(
     password varchar(100) NOT NULL,
     contactNo varchar(15),
     gender varchar(10),
-    DOB datetime
+    DOB date
 );
 
 create table if not exists Venue(
@@ -16,7 +16,7 @@ create table if not exists Venue(
     city varchar(50),
     landmark varchar(50),
     state varchar(50),
-    isFuntional boolean,
+    isFunctional boolean,
 --     seatMatrixDescription varchar(100),
     picSeatMatrixUrl varchar(100)
 );
@@ -32,19 +32,19 @@ create table if not exists Staff (
     password varchar(100) NOT NULL default "password123.",
     contactNo varchar(15),
     gender varchar(10),
-    DOB datetime
-    role int NOT NULL default 0, --caterer, sweeper, etc
+    DOB date,
+    role int NOT NULL default 0,
     groupNumber int,
     salary int,
 --     timings time,
     venueId int ,
     joiningDate date,
     leavingDate date ,
-    accountNo varchar(20) primary key,
+    accountNo varchar(20),
     IFSCCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
-    foreign key (venueId) references Venue(venueId),
+    foreign key (venueId) references Venue(venueId)
 );
 
 create table if not exists Event(
@@ -62,9 +62,9 @@ create table if not exists Seat(
     seatId int not null,
     venueId int,
     seatType varchar(20), 
-    primary key (seatId, venueId)
-    foreign key (venueId) references venue(venueId)
-    );
+    primary key (seatId, venueId),
+    foreign key (venueId) references Venue(venueId)
+);
 
 -- venue id was removed
 create table if not exists EventSeatStatus (
@@ -75,7 +75,7 @@ create table if not exists EventSeatStatus (
     foreign key (seatId) references Seat(seatId),
     foreign key (eventId) references Event(eventId),
     primary key (seatId, eventId)
-    );
+);
 
 
 create table if not exists Review(
@@ -91,13 +91,13 @@ create table if not exists Review(
 create table if not exists Slot (
     slotId int not null,
     venueId int,
-    startTime datetime,
-    endTime datetime,
+    startTime time,
+    endTime time,
     price int,
     isRented boolean default false,
-    primary key (slotId, venueId)
-    foreign key (venueId) references Venue(venueId),
-    );
+    primary key (slotId, venueId),
+    foreign key (venueId) references Venue(venueId)
+);
 
 -- event takes places in slot
 create table if not exists TakesPlace (
@@ -157,9 +157,9 @@ create table if not exists Transaction (
     amount int,
     userId int,
     eventId int,
-    transactionImage varchar(100),
-    foreign key (userId) references user(userId),
-    foreign key (eventId) references event(eventId)
+    transactionImageUrl varchar(100),
+    foreign key (userId) references User(userId),
+    foreign key (eventId) references Event(eventId)
 );
 
 
@@ -167,16 +167,16 @@ create table if not exists SeatBook(
     eventId int,
     seatId int,
     transactionId int,
-    foreign key (venueId) references Event(eventId),
+    foreign key (eventId) references Event(eventId),
     foreign key (seatId) references Seat(seatId),
     foreign key (transactionId) references Transaction(TransactionId),
-    primary key (venueId, seatId, transactionId)
-    );
+    primary key (eventId, seatId, transactionId)
+);
 
 
 create table if not exists BankDetails(
     accountNo varchar(20) primary key,
-    IFSCCode varchar(20),
+    IfscCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
     userId int,
