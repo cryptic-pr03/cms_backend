@@ -5,6 +5,7 @@ public class Seat {
     private int venueId;
     private String seatType;
 
+
     public Seat() {
 
     }
@@ -46,5 +47,6 @@ public class Seat {
 
     public void setseatType(String seatType) {
         this.seatType = seatType;
+
     }
 }

@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class Staff {
-
     private int staffId;
     private String firstName;
     private String lastName;
@@ -24,6 +23,7 @@ public class Staff {
     private String IFSCCode;
     private String bankName;
     private String branchName;
+
 
 
     public Staff() {
@@ -137,6 +137,7 @@ public class Staff {
 
     public void setDOB(Date DOB) {
         this.DOB = DOB;
+
     }
 
     public int getRole() {
@@ -162,6 +163,7 @@ public class Staff {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
 
     public int getVenueId() {
         return venueId;
@@ -218,4 +220,5 @@ public class Staff {
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
+
 }

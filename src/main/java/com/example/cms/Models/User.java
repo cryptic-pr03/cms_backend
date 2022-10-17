@@ -10,6 +10,7 @@ public class User {
     private String email;
     private String password;
     private String contactNo;
+
     private String gender;
     private Date DOB;
 
@@ -18,6 +19,7 @@ public class User {
     }
 
     public User(int userId, String firstName, String lastName, String email, String password, String contactNo,
+
                 String gender, Date DOB){
         this.userId = userId;
         this.firstName = firstName;
@@ -106,5 +108,4 @@ public class User {
     public void setUserDOB(Date DOB){
         this.DOB = DOB;
     }
-
 }

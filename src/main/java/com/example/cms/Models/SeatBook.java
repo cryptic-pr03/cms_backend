@@ -30,6 +30,7 @@ public class SeatBook {
 
     public void seteventId(int eventId) {
         this.eventId = eventId;
+
     }
 
     public int getSeatId() {

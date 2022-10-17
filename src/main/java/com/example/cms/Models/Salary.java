@@ -46,6 +46,7 @@ public class Salary {
 
     public void setTimeOfPayment(Timestamp timeOfPayment) {
         this.timeOfPayment = timeOfPayment;
+
     }
 
     public int getAmount() {

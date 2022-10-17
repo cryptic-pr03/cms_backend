@@ -2,20 +2,18 @@ package com.example.cms.Models;
 
 public class EventSeatStatus {
     private int seatId;
-    private int venueId;
     private int eventId;
-    private boolean status;
+    private boolean isBooked;
     private int price;
 
     public EventSeatStatus() {
 
     }
 
-    public EventSeatStatus(int seatId, int venueId, int eventId, boolean status, int price) {
+    public EventSeatStatus(int seatId, int eventId, boolean isBooked, int price) {
         this.seatId = seatId;
-        this.venueId = venueId;
         this.eventId = eventId;
-        this.status = status;
+        this.isBooked = isBooked;
         this.price = price;
     }
 
@@ -27,14 +25,6 @@ public class EventSeatStatus {
         this.seatId = seatId;
     }
 
-    public int getVenueId() {
-        return venueId;
-    }
-
-    public void setVenueId(int venueId) {
-        this.venueId = venueId;
-    }
-
     public int getEventId() {
         return eventId;
     }
@@ -43,12 +33,12 @@ public class EventSeatStatus {
         this.eventId = eventId;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isBooked() {
+        return isBooked;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setBooked(boolean booked) {
+        isBooked = booked;
     }
 
     public int getPrice() {
@@ -57,5 +47,15 @@ public class EventSeatStatus {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+    
+    @Override
+    public String toString() {
+        return "EventSeatStatus{" +
+                "seatId=" + seatId +
+                ", eventId=" + eventId +
+                ", isBooked=" + isBooked +
+                ", price=" + price +
+                '}';
     }
 }

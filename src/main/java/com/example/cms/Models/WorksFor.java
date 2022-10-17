@@ -2,6 +2,7 @@ package com.example.cms.Models;
 
 public class WorksFor {
     private int userId;
+
     private int eventId;
 
     public WorksFor() {
@@ -20,6 +21,7 @@ public class WorksFor {
                 ", eventId=" + eventId +
                 '}';
     }
+
 
     public int getUserId() {
         return userId;

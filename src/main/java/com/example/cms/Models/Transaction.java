@@ -12,13 +12,13 @@ public class Transaction {
     private int amount;
     private int userId;
     private int eventId;
-    private String transactionImage;
+    private String transactionImageUrl;
 
     public Transaction() {
 
     }
-
-    public Transaction(int transactionId, Date date, Time time, String type, int amount, int userId, int eventId, String transactionImage) {
+    
+    public Transaction(int transactionId, Date date, Time time, String type, int amount, int userId, int eventId, String transactionImageUrl) {
         this.transactionId = transactionId;
         this.date = date;
         this.time = time;
@@ -26,7 +26,7 @@ public class Transaction {
         this.amount = amount;
         this.userId = userId;
         this.eventId = eventId;
-        this.transactionImage = transactionImage;
+        this.transactionImageUrl = transactionImageUrl;
     }
 
     public int getTransactionId() {
@@ -85,11 +85,25 @@ public class Transaction {
         this.eventId = eventId;
     }
 
-    public String getTransactionImage() {
-        return transactionImage;
+    public String gettransactionImageUrl() {
+        return transactionImageUrl;
     }
 
-    public void setTransactionImage(String transactionImage) {
-        this.transactionImage = transactionImage;
+    public void settransactionImageUrl(String transactionImageUrl) {
+        this.transactionImageUrl = transactionImageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", date=" + date +
+                ", time=" + time +
+                ", type='" + type + '\'' +
+                ", amount=" + amount +
+                ", userId=" + userId +
+                ", eventId=" + eventId +
+                ", transactionImageUrl='" + transactionImageUrl + '\'' +
+                '}';
     }
 }
