@@ -9,21 +9,21 @@ public class Event {
     private String name;
     private Time startTime;
     private Time endTime;
-    private Date date;
     private int ageLimit;
+    private Date eventDate;
     private String logoUrl;
 
     public Event() {
 
     }
 
-    public Event(int eventId, String name, Time startTime, Time endTime, Date date, int ageLimit, String logoUrl) {
+    public Event(int eventId, String name, Time startTime, Time endTime, int ageLimit, Date eventDate, String logoUrl) {
         this.eventId = eventId;
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.date = date;
         this.ageLimit = ageLimit;
+        this.eventDate = eventDate;
         this.logoUrl = logoUrl;
     }
 
@@ -60,11 +60,11 @@ public class Event {
     }
 
     public Date getEventDate(){
-        return date;
+        return eventDate;
     }
 
-    public void setEventDate(Date date){
-        this.date = date;
+    public void setEventDate(Date eventDate){
+        this.eventDate = eventDate;
     }
 
     public int getEventAge(){
@@ -81,5 +81,18 @@ public class Event {
 
     public void setEventLogoUrl(String logoUrl){
         this.logoUrl = logoUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", name='" + name + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", ageLimit=" + ageLimit +
+                ", eventDate=" + eventDate +
+                ", logoUrl='" + logoUrl + '\'' +
+                '}';
     }
 }

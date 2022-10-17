@@ -8,19 +8,19 @@ public class Slot {
     private Time startTime;
     private Time endTime;
     private int price;
-    private boolean rentalStatus;
+    private boolean isRented;
 
     public Slot() {
 
     }
 
-    public Slot(int slotId, int venueId, Time startTime, Time endTime, int price, boolean rentalStatus) {
+    public Slot(int slotId, int venueId, Time startTime, Time endTime, int price, boolean isRented) {
         this.slotId = slotId;
         this.venueId = venueId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
-        this.rentalStatus = rentalStatus;
+        this.isRented = isRented;
     }
 
     public int getSlotId() {
@@ -63,11 +63,23 @@ public class Slot {
         this.price = price;
     }
 
-    public boolean getRentalStatus() {
-        return rentalStatus;
+    public boolean getisRented() {
+        return isRented;
     }
 
-    public void setRentalStatus(boolean rentalStatus) {
-        this.rentalStatus = rentalStatus;
+    public void setisRented(boolean isRented) {
+        this.isRented = isRented;
+    }
+
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "slotId=" + slotId +
+                ", venueId=" + venueId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", price=" + price +
+                ", isRented=" + isRented +
+                '}';
     }
 }

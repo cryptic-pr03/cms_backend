@@ -157,7 +157,7 @@ create table if not exists Transaction (
     amount int,
     userId int,
     eventId int,
-    transactionImage varchar(100),
+    transactionImageUrl varchar(100),
     foreign key (userId) references User(userId),
     foreign key (eventId) references Event(eventId)
 );
@@ -176,7 +176,7 @@ create table if not exists SeatBook(
 
 create table if not exists BankDetails(
     accountNo varchar(20) primary key,
-    IFSCCode varchar(20),
+    IfscCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
     userId int,

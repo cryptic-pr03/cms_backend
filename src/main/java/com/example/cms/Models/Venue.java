@@ -8,7 +8,7 @@ public class Venue {
     private String city;
     private String landmark;
     private String state;
-    private boolean isAvailable;
+    private boolean isFunctional;
     private String seatMatrixDescription;
     private String picSeatMatrixUrl;
 
@@ -18,7 +18,7 @@ public class Venue {
 
     public Venue(
             int venueId, String name, int capacity, String city, String landmark,
-            String state, boolean isAvailable, String seatMatrixDescription, String picSeatMatrixUrl
+            String state, boolean isFunctional, String seatMatrixDescription, String picSeatMatrixUrl
     ){
         this.venueId = venueId;
         this.name = name;
@@ -26,7 +26,7 @@ public class Venue {
         this.city = city;
         this.landmark = landmark;
         this.state = state;
-        this.isAvailable = isAvailable;
+        this.isFunctional = isFunctional;
         this.seatMatrixDescription = seatMatrixDescription;
         this.picSeatMatrixUrl = picSeatMatrixUrl;
     }
@@ -79,12 +79,12 @@ public class Venue {
         this.state = state;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean isFunctional() {
+        return isFunctional;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailable(boolean availability) {
+        isFunctional = availability;
     }
 
     public String getSeatMatrixDescription() {
@@ -101,5 +101,20 @@ public class Venue {
 
     public void setPicSeatMatrixUrl(String picSeatMatrixUrl) {
         this.picSeatMatrixUrl = picSeatMatrixUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Venue{" +
+                "venueId=" + venueId +
+                ", name='" + name + '\'' +
+                ", capacity=" + capacity +
+                ", city='" + city + '\'' +
+                ", landmark='" + landmark + '\'' +
+                ", state='" + state + '\'' +
+                ", isFunctional=" + isFunctional +
+                ", seatMatrixDescription='" + seatMatrixDescription + '\'' +
+                ", picSeatMatrixUrl='" + picSeatMatrixUrl + '\'' +
+                '}';
     }
 }
