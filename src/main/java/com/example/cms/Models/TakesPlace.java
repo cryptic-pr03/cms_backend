@@ -15,6 +15,15 @@ public class TakesPlace {
         this.eventId = eventId;
     }
 
+    @Override
+    public String toString() {
+        return "TakesPlace{" +
+                "venueId=" + venueId +
+                ", slotId=" + slotId +
+                ", eventId=" + eventId +
+                '}';
+    }
+
     public int getVenueId() {
         return venueId;
     }

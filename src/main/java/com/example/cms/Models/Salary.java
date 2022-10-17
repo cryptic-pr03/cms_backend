@@ -1,11 +1,10 @@
 package com.example.cms.Models;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Salary {
-    private int userId;
-    private int role;
-    private Date dateOfPayment;
+    private int staffId;
+    private Timestamp timeOfPayment;
     private int amount;
     private int bonus;
     private Boolean paidStatus;
@@ -14,37 +13,39 @@ public class Salary {
 
     }
 
-    public Salary(int userId, int role, Date dateOfPayment, int amount, int bonus, Boolean paidStatus) {
-        this.userId = userId;
-        this.role = role;
-        this.dateOfPayment = dateOfPayment;
+    public Salary(int staffId, Timestamp timeOfPayment, int amount, int bonus, Boolean paidStatus) {
+        this.staffId = staffId;
+        this.timeOfPayment = timeOfPayment;
         this.amount = amount;
         this.bonus = bonus;
         this.paidStatus = paidStatus;
     }
 
-    public int getUserId() {
-        return userId;
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "staffId=" + staffId +
+                ", timeOfPayment=" + timeOfPayment +
+                ", amount=" + amount +
+                ", bonus=" + bonus +
+                ", paidStatus=" + paidStatus +
+                '}';
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getStaffId() {
+        return staffId;
     }
 
-    public int getRole() {
-        return role;
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public Timestamp getTimeOfPayment() {
+        return timeOfPayment;
     }
 
-    public Date getDateOfPayment() {
-        return dateOfPayment;
-    }
-
-    public void setDateOfPayment(Date dateOfPayment) {
-        this.dateOfPayment = dateOfPayment;
+    public void setTimeOfPayment(Timestamp timeOfPayment) {
+        this.timeOfPayment = timeOfPayment;
     }
 
     public int getAmount() {

@@ -9,7 +9,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private int contact_no;
+    private String contactNo;
     private String gender;
     private Date DOB;
 
@@ -17,16 +17,30 @@ public class User {
 
     }
 
-    public User(int userId, String firstName, String lastName, String email, String password, int contact_no,
+    public User(int userId, String firstName, String lastName, String email, String password, String contactNo,
                 String gender, Date DOB){
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.contact_no = contact_no;
+        this.contactNo = contactNo;
         this.gender = gender;
         this.DOB = DOB;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", contactNo=" + contactNo +
+                ", gender='" + gender + '\'' +
+                ", DOB=" + DOB +
+                '}';
     }
 
     public int getUserID(){
@@ -69,12 +83,12 @@ public class User {
         this.password = password;
     }
 
-    public int getUserContactNo(){
-        return contact_no;
+    public String getUserContactNo(){
+        return contactNo;
     }
 
-    public void setUserContactNo(int contact_no){
-        this.contact_no = contact_no;
+    public void setUserContactNo(String contactNo){
+        this.contactNo = contactNo;
     }
 
     public String getUserGender(){
@@ -92,4 +106,5 @@ public class User {
     public void setUserDOB(Date DOB){
         this.DOB = DOB;
     }
+
 }

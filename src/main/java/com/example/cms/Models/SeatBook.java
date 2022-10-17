@@ -1,7 +1,7 @@
 package com.example.cms.Models;
 
 public class SeatBook {
-    private int venueId;
+    private int eventId;
     private int seatId;
     private int transactionId;
 
@@ -9,18 +9,27 @@ public class SeatBook {
 
     }
 
-    public SeatBook(int venueId, int seatId, int transactionId) {
-        this.venueId = venueId;
+    public SeatBook(int eventId, int seatId, int transactionId) {
+        this.eventId = eventId;
         this.seatId = seatId;
         this.transactionId = transactionId;
     }
 
-    public int getVenueId() {
-        return venueId;
+    @Override
+    public String toString() {
+        return "SeatBook{" +
+                "eventId=" + eventId +
+                ", seatId=" + seatId +
+                ", transactionId=" + transactionId +
+                '}';
     }
 
-    public void setVenueId(int venueId) {
-        this.venueId = venueId;
+    public int geteventId() {
+        return eventId;
+    }
+
+    public void seteventId(int eventId) {
+        this.eventId = eventId;
     }
 
     public int getSeatId() {

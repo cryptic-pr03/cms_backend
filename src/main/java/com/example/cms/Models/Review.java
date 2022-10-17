@@ -17,6 +17,16 @@ public class Review {
         this.eventId = eventId;
     }
 
+    @Override
+    public String toString() {
+        return "Review{" +
+                "reviewId=" + reviewId +
+                ", reviewData='" + reviewData + '\'' +
+                ", userId=" + userId +
+                ", eventId=" + eventId +
+                '}';
+    }
+
     public int getReviewId() {
         return reviewId;
     }
