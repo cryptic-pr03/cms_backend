@@ -12,6 +12,7 @@ public class BankDetails {
 
     }
 
+
     public BankDetails(int accountNo, int IfscCode, String bankName, String branchName, int userId) {
         this.accountNo = accountNo;
         this.IfscCode = IfscCode;

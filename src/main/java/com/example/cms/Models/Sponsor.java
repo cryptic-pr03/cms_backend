@@ -13,6 +13,14 @@ public class Sponsor {
         this.sponsorName = sponsorName;
     }
 
+    @Override
+    public String toString() {
+        return "Sponsor{" +
+                "eventId=" + eventId +
+                ", sponsorName='" + sponsorName + '\'' +
+                '}';
+    }
+
     public int getEventId() {
         return eventId;
     }

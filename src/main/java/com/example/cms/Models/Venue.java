@@ -79,6 +79,7 @@ public class Venue {
         this.state = state;
     }
 
+
     public boolean isFunctional() {
         return isFunctional;
     }
