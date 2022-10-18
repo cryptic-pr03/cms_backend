@@ -20,6 +20,5 @@ public interface EventDAO {
     Event getEventByID(int eventId) throws CustomException;
 
     // for filtering and sorting on all events by attribute -->visible to everyone
-
     Event getEventByAttribute(String attributeName, String attributeValue) throws CustomException;
 }
