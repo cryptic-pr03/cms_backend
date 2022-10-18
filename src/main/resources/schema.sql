@@ -136,7 +136,7 @@ create table if not exists Pic(
     primary key (venueId, venuePicUrl)
 );
 
-create table Salary(
+create table if not exists Salary(
     staffId int,
     timeOfPayment datetime,
     amount int,
