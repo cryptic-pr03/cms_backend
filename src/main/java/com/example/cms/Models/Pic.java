@@ -13,6 +13,14 @@ public class Pic {
         this.venuePicUrl = venuePicUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Pic{" +
+                "venueId=" + venueId +
+                ", venuePicUrl='" + venuePicUrl + '\'' +
+                '}';
+    }
+
     public int getVenueId() {
         return venueId;
     }

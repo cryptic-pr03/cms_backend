@@ -9,7 +9,7 @@ public class Slot {
     private Time endTime;
     private int price;
     private boolean isRented;
-
+    
     public Slot() {
 
     }

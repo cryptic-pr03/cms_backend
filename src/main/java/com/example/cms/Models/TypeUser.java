@@ -14,6 +14,14 @@ public class TypeUser {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "TypeUser{" +
+                "userId=" + userId +
+                ", role=" + role +
+                '}';
+    }
+
     public int getUserId() {
         return userId;
     }

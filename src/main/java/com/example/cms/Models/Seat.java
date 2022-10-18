@@ -3,16 +3,26 @@ package com.example.cms.Models;
 public class Seat {
     private int seatId;
     private int venueId;
-    private String type;
+    private String seatType;
+
 
     public Seat() {
 
     }
 
-    public Seat(int seatId, int venueId, String type) {
+    public Seat(int seatId, int venueId, String seatType) {
         this.seatId = seatId;
         this.venueId = venueId;
-        this.type = type;
+        this.seatType = seatType;
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "seatId=" + seatId +
+                ", venueId=" + venueId +
+                ", seatType='" + seatType + '\'' +
+                '}';
     }
 
     public int getSeatId() {
@@ -31,11 +41,12 @@ public class Seat {
         this.venueId = venueId;
     }
 
-    public String getType() {
-        return type;
+    public String getseatType() {
+        return seatType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setseatType(String seatType) {
+        this.seatType = seatType;
+
     }
 }
