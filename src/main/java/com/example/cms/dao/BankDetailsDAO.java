@@ -10,7 +10,7 @@ public interface BankDetailsDAO {
 
     Boolean deleteBankDetails(BankDetails bankDetails) throws CustomException;
 
-    BankDetails updateBankDetails(BankDetails updatedBankDetails) throws CustomException;
+    BankDetails updateBankDetails(BankDetails updatedBankDetails , int userId) throws CustomException;
 
     List<BankDetails> getBankDetailsByAttribute(String attributeName, String attributeValue);
 
