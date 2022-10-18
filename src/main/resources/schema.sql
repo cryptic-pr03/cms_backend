@@ -66,8 +66,8 @@ create table if not exists Seat(
     foreign key (venueId) references Venue(venueId)
 );
 
--- venue id was removed
-create table if not exists EventSeatStatus (
+-- venue id was removed and newName EventSeat
+create table if not exists EventSeat (
     seatId int,
     eventId int,
     isBooked boolean default false,
