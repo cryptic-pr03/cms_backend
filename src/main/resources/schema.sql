@@ -66,8 +66,8 @@ create table if not exists Seat(
     foreign key (venueId) references Venue(venueId)
 );
 
--- venue id was removed
-create table if not exists EventSeatStatus (
+-- venue id was removed and newName EventSeat
+create table if not exists EventSeat (
     seatId int,
     eventId int,
     isBooked boolean default false,
@@ -93,9 +93,10 @@ create table if not exists Slot (
     venueId int,
     startTime time,
     endTime time,
+    slotDate date,
     price int,
     isRented boolean default false,
-    primary key (slotId, venueId),
+    primary key (slotId, venueId, slotDate),
     foreign key (venueId) references Venue(venueId)
 );
 
@@ -121,7 +122,6 @@ create table if not exists WorksFor (
 );
 
 
-
 create table if not exists Sponsor (
     eventId int,
     sponsorName varchar(50),
@@ -136,7 +136,7 @@ create table if not exists Pic(
     primary key (venueId, venuePicUrl)
 );
 
-create table Salary(
+create table if not exists Salary(
     staffId int,
     timeOfPayment datetime,
     amount int,
@@ -145,9 +145,6 @@ create table Salary(
     foreign key (staffId) references Staff(staffId),
     primary key (staffId, timeOfPayment)
 );
-
-
-    
 
 create table if not exists Transaction (
     transactionId int primary key AUTO_INCREMENT,
