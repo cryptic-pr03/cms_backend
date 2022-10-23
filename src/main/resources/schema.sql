@@ -29,7 +29,7 @@ create table if not exists Staff (
     lastName varchar(50),
 --     COMPANY EMAIL
     email varchar(100) NOT NULL UNIQUE,
-    password varchar(100) NOT NULL default "password123.",
+    password varchar(100) NOT NULL default 'password123.',
     contactNo varchar(15),
     gender varchar(10),
     DOB date,
@@ -66,8 +66,8 @@ create table if not exists Seat(
     foreign key (venueId) references Venue(venueId)
 );
 
--- venue id was removed and newName EventSeat
-create table if not exists EventSeat (
+-- venue id was removed
+create table if not exists EventSeatStatus (
     seatId int,
     eventId int,
     isBooked boolean default false,
@@ -93,10 +93,9 @@ create table if not exists Slot (
     venueId int,
     startTime time,
     endTime time,
-    slotDate date,
     price int,
     isRented boolean default false,
-    primary key (slotId, venueId, slotDate),
+    primary key (slotId, venueId),
     foreign key (venueId) references Venue(venueId)
 );
 
@@ -122,6 +121,7 @@ create table if not exists WorksFor (
 );
 
 
+
 create table if not exists Sponsor (
     eventId int,
     sponsorName varchar(50),
@@ -145,6 +145,9 @@ create table if not exists Salary(
     foreign key (staffId) references Staff(staffId),
     primary key (staffId, timeOfPayment)
 );
+
+
+    
 
 create table if not exists Transaction (
     transactionId int primary key AUTO_INCREMENT,
