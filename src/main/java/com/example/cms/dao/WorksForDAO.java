@@ -8,5 +8,5 @@ public interface WorksForDAO {
     WorksFor addWorksFor( WorksFor newWorksFor) throws  CustomException;
     Boolean deleteWorksFor(int userId, int EventId) throws CustomException;
     List<Integer> getAllWorkersByEvent (int eventId) ;
-    List<Integer> getEventsByUserId(int userId);
+    List<Integer> getEventsByStaffId(int staffId);
 }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface TakesPlaceDAO {
     TakesPlace addTakesPlace(TakesPlace newTakesPlace) throws CustomException;
     List<Event> getEventsHeldInVenue(int venueId) throws CustomException;
-    <T> TakesPlace getTakesPlaceByAttribute(String attributeName, T attributeValue) throws CustomException;
+    <T> List<TakesPlace> getTakesPlaceByAttribute(String attributeName, T attributeValue) throws CustomException;
 
 }
