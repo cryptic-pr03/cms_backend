@@ -44,7 +44,7 @@ create table if not exists Staff (
     IFSCCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
-    foreign key (venueId) references Venue(venueId)
+    foreign key (venueId) references Venue(venueId) on delete cascade
 );
 
 create table if not exists Event(

@@ -104,7 +104,8 @@ public class EventRepo implements EventDAO {
     }
 
     @Override
-    public List<Event> getAllEvents() {
+    public List<Event> getAllEvents()
+    {
         String sql = "SELECT * FROM Event";
         return jdbcTemplate.query(sql, new EventMapper());
     }
@@ -127,7 +128,8 @@ public class EventRepo implements EventDAO {
     }
 
     @Override
-    public <T> List<Event> getEventByAttribute(String attributeName, T attributeValue) throws CustomException {
+    public <T> List<Event> getEventByAttribute(String attributeName, T attributeValue) throws CustomException
+    {
         String sql = "SELECT * FROM Event WHERE " + attributeName + " = ?";
         try{
             return jdbcTemplate.query(sql, new EventMapper(), attributeValue);
