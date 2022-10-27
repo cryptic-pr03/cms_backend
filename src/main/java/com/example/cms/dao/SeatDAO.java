@@ -9,6 +9,6 @@ public interface SeatDAO {
     Seat addSeat(Seat newSeat) throws CustomException;
     Seat updateSeat(int SeatId, int venueId, Seat updatedSeat) throws CustomException;
     Boolean deleteSeat(int SeatId, int venueId) throws CustomException;
-    List<Seat> getSeatByVenueId(int venueId);
-    List<Seat> getSeatAtVenueByType(int venueId, String seatType);
+    List<Seat> getSeatByVenueId(int venueId) throws CustomException;
+    List<Seat> getSeatAtVenueByType(int venueId, String seatType) throws CustomException;
 }
