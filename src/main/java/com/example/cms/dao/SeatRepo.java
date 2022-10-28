@@ -31,7 +31,7 @@ public class SeatRepo implements SeatDAO{
 
     @Override
     public Seat getSeat(int SeatId, int venueId) throws CustomException {
-        String querySQL = "SELECT * FROM seat WHERE seatId=? AND venueId=?";
+        String querySQL = "SELECT * FROM Seat WHERE seatId=? AND venueId=?";
         try{
             List<Seat> ls = jdbcTemplate.query(querySQL , new SeatRepoMapper(), SeatId , venueId);
             if(ls.size() == 0){
@@ -46,8 +46,9 @@ public class SeatRepo implements SeatDAO{
 
     @Override
     public Seat addSeat(Seat newSeat) throws CustomException {
-        String querySQL = "INSERT INTO seat (seatId, venueId , seatType) VALUES(?,?,?)";
-        int isCreated ;
+        String querySQL = "INSERT INTO Seat (seatId, venueId , seatType) VALUES(?,?,?)";
+        int isCreated;
+
         try{
             isCreated = jdbcTemplate.update(querySQL , newSeat.getSeatId() , newSeat.getVenueId(),newSeat.getseatType());
         }catch(Exception e){
@@ -55,7 +56,7 @@ public class SeatRepo implements SeatDAO{
         }
 
         if(isCreated == 0){
-            throw new CustomException("Seat can not be added"+isCreated);
+            throw new CustomException("Seat can not be added : "+isCreated);
         }
         return newSeat;
     }
