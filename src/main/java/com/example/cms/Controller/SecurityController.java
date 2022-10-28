@@ -1,14 +1,14 @@
-package com.example.cms.Security;
+package com.example.cms.Controller;
 
 
 import com.example.cms.Models.User;
+import com.example.cms.Security.JwtUtil;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.UserDAO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +33,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/login", consumes = "application/json")
-    public ResponseEntity Login(@RequestBody Map<String, String> req) {
+    public ResponseEntity<?> Login(@RequestBody Map<String, String> req) {
 
         String email = req.get("userEmail");
         String password = req.get("userPassword");
@@ -55,7 +55,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public ResponseEntity Register(@RequestBody User user){
+    public ResponseEntity<?> Register(@RequestBody User user){
 
         String reqUserEmail = user.getUserEmail();
         String reqUserPassword = user.getUserPassword();
@@ -81,7 +81,7 @@ public class SecurityController {
     }
 
     @PostMapping("/log_out")
-    public ResponseEntity Logout(){
+    public ResponseEntity<?> Logout(){
         SecurityContextHolder.getContext().setAuthentication(null);
         return ResponseEntity.ok().build();
     }
