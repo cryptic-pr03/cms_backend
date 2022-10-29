@@ -74,12 +74,12 @@ public class Slot {
         this.price = price;
     }
 
-    public boolean isRented() {
+    public boolean getIsRented() {
         return isRented;
     }
 
     public void setRented(boolean rented) {
-        isRented = rented;
+        this.isRented = rented;
     }
 
     @Override

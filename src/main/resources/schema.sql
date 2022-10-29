@@ -1,5 +1,3 @@
-create database if not exists concert_management;
-use concert_management;
 create table if not exists User(
     userId int primary key AUTO_INCREMENT,
     firstName varchar(50),
@@ -31,7 +29,7 @@ create table if not exists Staff (
     lastName varchar(50),
 --     COMPANY EMAIL
     email varchar(100) NOT NULL UNIQUE,
-    password varchar(100) NOT NULL default 'password123.',
+    password varchar(100) NOT NULL default "password123.",
     contactNo varchar(15),
     gender varchar(10),
     DOB date,
@@ -66,10 +64,11 @@ create table if not exists Seat(
     seatType varchar(20), 
     primary key (seatId, venueId),
     foreign key (venueId) references Venue(venueId) on delete cascade
+
 );
 
--- venue id was removed
-create table if not exists EventSeatStatus (
+-- venue id was removed and newName EventSeat
+create table if not exists EventSeat (
     seatId int,
     eventId int,
     isBooked boolean default false,
@@ -95,9 +94,10 @@ create table if not exists Slot (
     venueId int,
     startTime time,
     endTime time,
+    slotDate date,
     price int,
     isRented boolean default false,
-    primary key (slotId, venueId),
+    primary key (slotId, venueId, slotDate),
     foreign key (venueId) references Venue(venueId) on delete cascade
 );
 
@@ -118,10 +118,9 @@ create table if not exists WorksFor (
     staffId int,
     eventId int,
     foreign key (staffId) references Staff(staffId) on delete cascade,
-    foreign key (eventId) references Event(eventId) on delete cascade,
+    foreign key (eventId) references Event(eventId)on delete cascade,
     primary key (staffId,  eventId)
 );
-
 
 
 create table if not exists Sponsor (
@@ -148,9 +147,6 @@ create table if not exists Salary(
     primary key (staffId, timeOfPayment)
 );
 
-
-    
-
 create table if not exists Transaction (
     transactionId int primary key AUTO_INCREMENT,
     date date,
@@ -171,14 +167,14 @@ create table if not exists SeatBook(
     transactionId int,
     foreign key (eventId) references Event(eventId) on delete cascade,
     foreign key (seatId) references Seat(seatId) on delete cascade,
-    foreign key (transactionId) references Transaction(TransactionId) on delete cascade,
+    foreign key (transactionId) references Transaction(TransactionId),
     primary key (eventId, seatId, transactionId)
 );
 
 
 create table if not exists BankDetails(
     accountNo varchar(20) primary key,
-    IFSCCode varchar(20),
+    IfscCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
     userId int,
