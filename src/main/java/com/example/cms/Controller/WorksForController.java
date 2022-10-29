@@ -1,8 +1,8 @@
-package com.example.cms.Controllers;
+package com.example.cms.Controller;
 
+import com.example.cms.Models.WorksFor;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.WorksForDAO;
-import com.example.cms.Models.WorksFor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

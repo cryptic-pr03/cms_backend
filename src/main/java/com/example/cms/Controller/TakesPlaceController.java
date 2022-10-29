@@ -1,9 +1,9 @@
-package com.example.cms.Controllers;
+package com.example.cms.Controller;
 
-import com.example.cms.dao.CustomException;
-import com.example.cms.dao.TakesPlaceDAO;
 import com.example.cms.Models.Event;
 import com.example.cms.Models.TakesPlace;
+import com.example.cms.dao.CustomException;
+import com.example.cms.dao.TakesPlaceDAO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
