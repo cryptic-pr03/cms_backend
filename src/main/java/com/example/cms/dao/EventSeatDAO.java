@@ -14,7 +14,7 @@ public interface EventSeatDAO {
     EventSeat getSeat(int seatId, int eventId) throws CustomException;
 
     // if pricing in changed then it is required
-    EventSeat updateSeat(int seatId, int eventId, EventSeat newEventSeat) throws CustomException;
+    EventSeat updateSeat(int seatId, int eventId, EventSeat updatedEventSeat) throws CustomException;
 
     // books seats --> only after verifying if transaction id done
     // change status of seatId
