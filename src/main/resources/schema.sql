@@ -44,7 +44,7 @@ create table if not exists Staff (
     IFSCCode varchar(20),
     bankName varchar(50),
     branchName varchar(50),
-    foreign key (venueId) references Venue(venueId)
+    foreign key (venueId) references Venue(venueId) on delete cascade
 );
 
 create table if not exists Event(
@@ -63,7 +63,8 @@ create table if not exists Seat(
     venueId int,
     seatType varchar(20), 
     primary key (seatId, venueId),
-    foreign key (venueId) references Venue(venueId)
+    foreign key (venueId) references Venue(venueId) on delete cascade
+
 );
 
 -- venue id was removed and newName EventSeat
@@ -72,8 +73,8 @@ create table if not exists EventSeat (
     eventId int,
     isBooked boolean default false,
     price int,
-    foreign key (seatId) references Seat(seatId),
-    foreign key (eventId) references Event(eventId),
+    foreign key (seatId) references Seat(seatId) on delete cascade,
+    foreign key (eventId) references Event(eventId) on delete cascade,
     primary key (seatId, eventId)
 );
 
@@ -83,8 +84,8 @@ create table if not exists Review(
     reviewData varchar(100),
     userId int,
     eventId int,
-    foreign key (userId) references User(userId),
-    foreign key (eventId) references Event(eventId)
+    foreign key (userId) references User(userId) on delete cascade,
+    foreign key (eventId) references Event(eventId) on delete cascade
 );
 
 
@@ -97,7 +98,7 @@ create table if not exists Slot (
     price int,
     isRented boolean default false,
     primary key (slotId, venueId, slotDate),
-    foreign key (venueId) references Venue(venueId)
+    foreign key (venueId) references Venue(venueId) on delete cascade
 );
 
 -- event takes places in slot
@@ -105,9 +106,9 @@ create table if not exists TakesPlace (
     venueId int not null,
     slotId int not null,
     eventId int not null,
-    foreign key (venueId) references Venue(venueId),
-    foreign key (slotId) references Slot(slotId),
-    foreign key (eventId) references Event(eventId),
+    foreign key (venueId) references Venue(venueId) on delete cascade,
+    foreign key (slotId) references Slot(slotId) on delete cascade,
+    foreign key (eventId) references Event(eventId) on delete cascade,
     primary key (venueId, slotId, eventId)
 );
 
@@ -116,8 +117,8 @@ create table if not exists TakesPlace (
 create table if not exists WorksFor (
     staffId int,
     eventId int,
-    foreign key (staffId) references Staff(staffId),
-    foreign key (eventId) references Event(eventId),
+    foreign key (staffId) references Staff(staffId) on delete cascade,
+    foreign key (eventId) references Event(eventId)on delete cascade,
     primary key (staffId,  eventId)
 );
 
@@ -125,14 +126,14 @@ create table if not exists WorksFor (
 create table if not exists Sponsor (
     eventId int,
     sponsorName varchar(50),
-    foreign key (eventId) references Event(eventId),
+    foreign key (eventId) references Event(eventId) on delete cascade,
     primary key (eventId, sponsorName)
 );
 
 create table if not exists Pic(
     venueId int,
     venuePicUrl varchar(100),
-    foreign key (venueId) references Venue(venueId),
+    foreign key (venueId) references Venue(venueId) on delete cascade,
     primary key (venueId, venuePicUrl)
 );
 
@@ -142,7 +143,7 @@ create table if not exists Salary(
     amount int,
     bonus int,
     paidStatus boolean default false,
-    foreign key (staffId) references Staff(staffId),
+    foreign key (staffId) references Staff(staffId) on delete cascade,
     primary key (staffId, timeOfPayment)
 );
 
@@ -155,8 +156,8 @@ create table if not exists Transaction (
     userId int,
     eventId int,
     transactionImageUrl varchar(100),
-    foreign key (userId) references User(userId),
-    foreign key (eventId) references Event(eventId)
+    foreign key (userId) references User(userId) on delete cascade,
+    foreign key (eventId) references Event(eventId) on delete cascade
 );
 
 
@@ -164,8 +165,8 @@ create table if not exists SeatBook(
     eventId int,
     seatId int,
     transactionId int,
-    foreign key (eventId) references Event(eventId),
-    foreign key (seatId) references Seat(seatId),
+    foreign key (eventId) references Event(eventId) on delete cascade,
+    foreign key (seatId) references Seat(seatId) on delete cascade,
     foreign key (transactionId) references Transaction(TransactionId),
     primary key (eventId, seatId, transactionId)
 );
@@ -177,12 +178,12 @@ create table if not exists BankDetails(
     bankName varchar(50),
     branchName varchar(50),
     userId int,
-    foreign key (userId) references User(userId)
+    foreign key (userId) references User(userId) on delete cascade
 );
 
 create table if not exists TypeUser(
     userId int,
     role int,
-    foreign key (userId) references User(userId),
+    foreign key (userId) references User(userId) on delete cascade,
     primary key (userId, role)
 );
