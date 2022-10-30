@@ -11,11 +11,11 @@ public interface VenueDAO {
     // venue manager can update a venue
     Venue updateVenue(int venueId, Venue updatedVenue) throws CustomException;
     // just change isFunctional to false
-    Venue deleteVenue(int venueId) throws CustomException;
+    Boolean deleteVenue(int venueId) throws CustomException;
 
     //admin can get list of all venues
     List<Venue> getAllVenues();
 
     Venue getVenueById(int venueId) throws CustomException;
-    List<Venue> getVenueByAttribute(String attributeName, String attributeValue) throws CustomException;
+    <T> List<Venue> getVenueByAttribute(String attributeName, T attributeValue) throws CustomException;
 }

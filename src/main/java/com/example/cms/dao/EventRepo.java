@@ -64,7 +64,9 @@ public class EventRepo implements EventDAO {
         if(isCreated == 0 || keyHolder.getKey() == null){
             throw new CustomException("Event not inserted");
         }
-        return getEventById(keyHolder.getKey().intValue());
+
+        newEvent.setEventId(keyHolder.getKey().intValue());
+        return newEvent;
     }
 
     @Override
@@ -85,7 +87,7 @@ public class EventRepo implements EventDAO {
         if(isUpdated == 0){
             throw new CustomException("Could not update event");
         }
-        return getEventById(eventId);
+        return updatedEvent;
     }
 
     @Override
@@ -116,10 +118,10 @@ public class EventRepo implements EventDAO {
 
         try{
             List<Event> ls = jdbcTemplate.query(sql, new EventMapper(), eventId);
-            if (ls.size() == 1) {
-                return ls.get(0);
+            if (ls.size() == 0) {
+                return null;
             } else {
-                throw new CustomException("Event with id " + eventId + " is not available");
+                return ls.get(0);
             }
         }
         catch (Exception e){

@@ -71,13 +71,15 @@ public class StaffRepo implements StaffDAO{
                 ps.setString(17,newStaff.getBranchName());
 
                 return ps;
-                } , keyHolder);
+            } , keyHolder);
         }catch(Exception e){
             throw new CustomException(e.getMessage());
         }
 
-        if(isCreated == 0 || keyHolder.getKey() == null)throw new CustomException("Staff not inserted");
-        return getStaffById(keyHolder.getKey().intValue());
+        if(isCreated == 0 || keyHolder.getKey() == null) throw new CustomException("Staff not inserted");
+
+        newStaff.setStaffId(keyHolder.getKey().intValue());
+        return newStaff;
     }
 
     @Override
@@ -97,14 +99,14 @@ public class StaffRepo implements StaffDAO{
 
     @Override
     public Boolean delete(int staffId) throws CustomException {
-        String querySQL="DELETE FROM Staff WHERE staffId=?";;
+        String querySQL="DELETE FROM Staff WHERE staffId=?";
         int isDeleted;
         try{
             isDeleted = jdbcTemplate.update(querySQL , staffId);
         }catch (Exception e){
             throw new CustomException("Can not Delete");
         }
-        return isDeleted!=0;
+        return isDeleted != 0;
     }
 
     @Override
@@ -112,8 +114,12 @@ public class StaffRepo implements StaffDAO{
         String querySQL = "SELECT * FROM Staff WHERE staffId = ?";
         try{
             List<Staff> ls = jdbcTemplate.query(querySQL , new StaffRepoMapper() , StaffId);
-            if (ls.size() == 0)throw new CustomException("Staff with id" + StaffId +"do not exist");
-            else return ls.get(0);
+            if (ls.size() == 0) {
+                return null;
+            }
+            else {
+                return ls.get(0);
+            }
         }catch (Exception e){
             throw new CustomException(e.getMessage());
         }
@@ -121,8 +127,22 @@ public class StaffRepo implements StaffDAO{
     }
 
     @Override
+    public Staff getStaffByEmailId(String StaffEmailId) throws CustomException {
+        String querySQL = "SELECT * FROM Staff WHERE email = ?";
+        try{
+            List<Staff> ls = jdbcTemplate.query(querySQL , new StaffRepoMapper() , StaffEmailId);
+            if (ls.size() == 0) {
+                return null;
+            }
+            else return ls.get(0);
+        }catch (Exception e){
+            throw new CustomException(e.getMessage());
+        }
+    }
+
+    @Override
     public <T> List<Staff> getStaffByAttribute(String attributeName, T attributeValue) throws CustomException {
-        String querySQL ="SELECT * FROM Staff WHERE " + attributeName + "=?";
+        String querySQL = "SELECT * FROM Staff WHERE " + attributeName + " = ?";
 
         try{
             List<Staff> ls = jdbcTemplate.query(querySQL , new StaffRepoMapper() , attributeValue);
