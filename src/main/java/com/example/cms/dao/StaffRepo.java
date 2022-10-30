@@ -47,10 +47,8 @@ public class StaffRepo implements StaffDAO{
     @Override
     public Staff addStaff(Staff newStaff) throws CustomException {
         String querySQL = "INSERT INTO Staff ( firstName, lastName,email ,password ,contactNo,gender,DOB,role,groupNumber,salary,venueId,joiningDate,leavingDate,accountNo,IFSCCode,bankName,branchName) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
         int isCreated ;
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-
         try{
             isCreated = jdbcTemplate.update(con ->{
                 PreparedStatement ps = con.prepareStatement(querySQL , Statement.RETURN_GENERATED_KEYS);
