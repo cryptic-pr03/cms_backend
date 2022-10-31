@@ -72,7 +72,7 @@ create table if not exists EventSeat (
     seatId int,
     eventId int,
     isBooked boolean default false,
-    price int,
+    price int default 0,
     foreign key (seatId) references Seat(seatId) on delete cascade,
     foreign key (eventId) references Event(eventId) on delete cascade,
     primary key (seatId, eventId)

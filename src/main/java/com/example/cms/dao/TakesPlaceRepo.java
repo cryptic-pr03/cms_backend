@@ -91,4 +91,24 @@ public class TakesPlaceRepo implements TakesPlaceDAO{
         String sql = "SELECT * FROM TakesPlace WHERE " + attributeName + " = ?";
         return jdbcTemplate.query(sql, new TakesPlaceMapper(), attributeValue);
     }
+
+    @Override
+    public int getVenueIdOfEvent(int eventId) throws CustomException {
+        String sql = "SELECT venueId FROM TakesPlace WHERE eventId = ?";
+
+        List<Integer> ls;
+        try {
+            ls = jdbcTemplate.queryForList(sql, Integer.class, eventId);
+
+            if(ls.size() == 0){
+                throw new CustomException("Bad Request");
+            }
+            else{
+                return ls.get(0);
+            }
+        }
+        catch (Exception e){
+            throw new CustomException(e.getMessage());
+        }
+    }
 }
