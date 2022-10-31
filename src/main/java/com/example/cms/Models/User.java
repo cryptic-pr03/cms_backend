@@ -14,13 +14,13 @@ public class User {
     private String gender;
     private Date DOB;
 
-    public User(){
+    public User() {
 
     }
 
     public User(int userId, String firstName, String lastName, String email, String password, String contactNo,
 
-                String gender, Date DOB){
+                String gender, Date DOB) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,67 +45,67 @@ public class User {
                 '}';
     }
 
-    public int getUserID(){
+    public int getUserID() {
         return userId;
     }
 
-    public void setUserId(int userId){
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public String getUserFirstName(){
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setUserFirstName(String firstName){
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getUserLastName(){
+    public String getLastName() {
         return lastName;
     }
 
-    public void setUserLastName(String lastName){
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getUserEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public void setUserEmail(String email){
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getUserPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setUserPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUserContactNo(){
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setUserContactNo(String contactNo){
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
-    public String getUserGender(){
+    public String getGender() {
         return gender;
     }
 
-    public void setUserGender(String gender){
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public Date getUserDOB(){
+    public Date getDOB() {
         return DOB;
     }
 
-    public void setUserDOB(Date DOB){
+    public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
 }

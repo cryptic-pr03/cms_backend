@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -37,15 +35,15 @@ public class MyUserDetailsService implements UserDetailsService {
         try {
             User user = userRepo.getUserByEmailId(userEmailId);
 
-            if(user != null){
+            if (user != null) {
                 List<Integer> roleValues = typeUserRepo.getRolesByUserId(user.getUserID());
 
                 ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                for(int role : roleValues){
-                    authorities.add(new SimpleGrantedAuthority(cnts.roleValue.get(role)));
+                for (int role : roleValues) {
+                    authorities.add(new SimpleGrantedAuthority(cnts.typeUserCode.get(role)));
                 }
 
-                return new org.springframework.security.core.userdetails.User(user.getUserEmail(), user.getUserPassword(), authorities);
+                return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
             }
 
         } catch (CustomException e) {
@@ -55,7 +53,7 @@ public class MyUserDetailsService implements UserDetailsService {
         try {
             Staff user = staffRepo.getStaffByEmailId(userEmailId);
 
-            if(user != null){
+            if (user != null) {
                 return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
             }
 
