@@ -1,7 +1,8 @@
 package com.example.cms.dao;
 
-import com.example.cms.Models.Event;
 import com.example.cms.Models.EventSeat;
+import com.example.cms.Models.Seat;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,10 +20,12 @@ public class EventSeatRepo implements EventSeatDAO{
 
     private final JdbcTemplate jdbcTemplate;
     private final TakesPlaceDAO takesPlaceRepo;
+    private final SeatDAO seatRepo;
 
-    public EventSeatRepo(JdbcTemplate jdbcTemplate, TakesPlaceDAO takesPlaceRepo) {
+    public EventSeatRepo(JdbcTemplate jdbcTemplate, TakesPlaceDAO takesPlaceRepo, SeatDAO seatRepo) {
         this.jdbcTemplate = jdbcTemplate;
         this.takesPlaceRepo = takesPlaceRepo;
+        this.seatRepo = seatRepo;
     }
 
     private static class EventSeatMapper implements RowMapper<EventSeat>{
@@ -114,12 +117,41 @@ public class EventSeatRepo implements EventSeatDAO{
     }
 
     @Override
+    @Transactional
     public void initEventSeats(int eventId) throws CustomException {
+        int venueId = takesPlaceRepo.getVenueIdOfEvent(eventId);
 
+        List<Seat> ls = seatRepo.getSeatByVenueId(venueId);
+
+        String sql = "INSERT INTO EventSeat(seatId, eventId) VALUES(?, ?)";
+
+        try {
+            jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+                    Seat s = ls.get(i);
+                    ps.setInt(1, s.getSeatId());
+                    ps.setInt(2, eventId);
+                }
+
+                public int getBatchSize() {
+                    return ls.size();
+                }
+            });
+        }
+        catch (Exception e){
+            throw new CustomException(e.getMessage());
+        }
     }
 
     @Override
     public void deleteEventSeats(int eventId) throws CustomException {
+        String sql = "DELETE FROM EventSeat WHERE eventId = ?";
 
+        try {
+            jdbcTemplate.update(sql, eventId);
+        } catch (DataAccessException e) {
+            throw new CustomException(e.getMessage());
+        }
     }
 }

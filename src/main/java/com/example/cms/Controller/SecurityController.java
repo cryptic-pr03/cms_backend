@@ -113,10 +113,10 @@ public class SecurityController {
     }
 
 
-    @PostMapping("/log_out")
+    @PostMapping("/logout_")
     public ResponseEntity<?> Logout() {
         System.out.println("logout");
         SecurityContextHolder.getContext().setAuthentication(null);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Logout successful !!");
     }
 }
