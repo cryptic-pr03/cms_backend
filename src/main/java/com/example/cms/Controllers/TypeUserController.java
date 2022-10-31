@@ -1,4 +1,4 @@
-package com.example.cms.controller;
+package com.example.cms.Controllers;
 
 import com.example.cms.Models.TypeUser;
 import com.example.cms.Security.JwtUtil;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")

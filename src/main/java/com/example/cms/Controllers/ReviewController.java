@@ -1,10 +1,8 @@
-package com.example.cms.controller;
+package com.example.cms.Controllers;
 
 import com.example.cms.Models.Review;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.ReviewDAO;
-import com.example.cms.dao.ReviewRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 

@@ -1,4 +1,4 @@
-package com.example.cms.controller;
+package com.example.cms.Controllers;
 
 import com.example.cms.Models.Sponsor;
 import com.example.cms.dao.CustomException;
@@ -11,39 +11,40 @@ import java.util.List;
 @RequestMapping("/sponsor")
 public class SponsorController {
     SponsorDAO sponsorDAO;
-    public SponsorController(SponsorDAO sponsorDAO){this.sponsorDAO = sponsorDAO;}
+
+    public SponsorController(SponsorDAO sponsorDAO) {
+        this.sponsorDAO = sponsorDAO;
+    }
 
     @GetMapping("/sponsor/{eventId}")
     public List<Sponsor> getSponsorsByEventId(@PathVariable("eventId") int eventId) throws CustomException {
-        try{
-            List<Sponsor> sponsors= sponsorDAO.getSponsorsByEventId(eventId);
+        try {
+            List<Sponsor> sponsors = sponsorDAO.getSponsorsByEventId(eventId);
             return sponsors;
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
-
 
 
     @PostMapping
     public Sponsor addSponsor(@RequestBody Sponsor newSponsor) throws CustomException {
         try {
-            Sponsor addedSponsor =sponsorDAO.addSponsor(newSponsor);
+            Sponsor addedSponsor = sponsorDAO.addSponsor(newSponsor);
             return addedSponsor;
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
+
     @DeleteMapping("/delete/{eventId}/{sponsorName}")
-    public Boolean deleteSponsor(@PathVariable("eventId") int eventId, @PathVariable("sponsorName") String sponsorName) throws CustomException{
-        try{
+    public Boolean deleteSponsor(@PathVariable("eventId") int eventId, @PathVariable("sponsorName") String sponsorName) throws CustomException {
+        try {
             return sponsorDAO.deleteSponsor(eventId, sponsorName);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
-
-
 
 
 }

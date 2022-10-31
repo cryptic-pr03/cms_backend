@@ -1,4 +1,4 @@
-package com.example.cms.controller;
+package com.example.cms.Controllers;
 
 import com.example.cms.Models.WorksFor;
 import com.example.cms.dao.CustomException;
