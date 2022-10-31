@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 
 import com.example.cms.Models.TypeUser;

@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 import com.example.cms.Models.Slot;
 import com.example.cms.dao.CustomException;
@@ -16,41 +16,40 @@ public class SlotController {
     SlotDAO slotDAO;
 
     @GetMapping("/attribute/{attributeName}/{attributeValue}")
-    public <T>List<Slot> getSlotByAttribute (@PathVariable String attributeName , @PathVariable T attributeValue) throws CustomException {
-        try{
-            List<Slot> ls= slotDAO.getSlotByAttribute(attributeName , attributeValue);
+    public <T> List<Slot> getSlotByAttribute(@PathVariable String attributeName, @PathVariable T attributeValue) throws CustomException {
+        try {
+            List<Slot> ls = slotDAO.getSlotByAttribute(attributeName, attributeValue);
             return ls;
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
 
     @DeleteMapping("/delete/{venueId}/{slotId}/{slotDate}")
-    public Boolean deleteSlot(@PathVariable int venueId , @PathVariable int slotId ,@PathVariable Date slotDate) throws CustomException {
-        try{
-            return slotDAO.deleteSlot(venueId , slotId , slotDate);
-        }catch (Exception e){
-            throw  new CustomException(e.getMessage());
+    public Boolean deleteSlot(@PathVariable int venueId, @PathVariable int slotId, @PathVariable Date slotDate) throws CustomException {
+        try {
+            return slotDAO.deleteSlot(venueId, slotId, slotDate);
+        } catch (Exception e) {
+            throw new CustomException(e.getMessage());
         }
     }
 
     @PostMapping
     public Slot addSlot(@RequestBody Slot slot) throws CustomException {
-        try{
+        try {
             Slot addedSlot = slotDAO.addSlot(slot);
             return addedSlot;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
 
     @PutMapping
-    public Slot updateSlot(@RequestBody Slot slot ) throws CustomException {
-        try{
-            Slot updatedSlot = slotDAO.updateSlot(slot , slot.getVenueId() , slot.getSlotId() , slot.getSlotDate());
+    public Slot updateSlot(@RequestBody Slot slot) throws CustomException {
+        try {
+            Slot updatedSlot = slotDAO.updateSlot(slot, slot.getVenueId(), slot.getSlotId(), slot.getSlotDate());
             return updatedSlot;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

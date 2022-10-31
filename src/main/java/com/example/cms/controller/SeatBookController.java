@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 import com.example.cms.Models.SeatBook;
 import com.example.cms.dao.CustomException;
@@ -12,22 +12,23 @@ public class SeatBookController {
 
     @Autowired
     SeatBookDAO seatBookDAO;
+
     @GetMapping("/transactionId/{eventId}/{seatId}")
-    public int getTrxnId(@PathVariable int eventId , @PathVariable int seatId)throws CustomException{
-        try{
-            int transactionId = seatBookDAO.getTrxnId(eventId ,seatId);
+    public int getTrxnId(@PathVariable int eventId, @PathVariable int seatId) throws CustomException {
+        try {
+            int transactionId = seatBookDAO.getTrxnId(eventId, seatId);
             return transactionId;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
 
     @PostMapping
-    public SeatBook addSeatBook(@RequestBody SeatBook seatBook)throws CustomException{
-        try{
+    public SeatBook addSeatBook(@RequestBody SeatBook seatBook) throws CustomException {
+        try {
             SeatBook addedSeatBook = seatBookDAO.addSeatBook(seatBook);
             return addedSeatBook;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

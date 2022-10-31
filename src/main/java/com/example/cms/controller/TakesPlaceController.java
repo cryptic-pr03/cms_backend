@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 import com.example.cms.Models.Event;
 import com.example.cms.Models.TakesPlace;
@@ -21,8 +21,7 @@ public class TakesPlaceController {
     public TakesPlace addTakesPlace(@RequestBody TakesPlace takesPlace) throws CustomException {
         try {
             return takesPlaceDAO.addTakesPlace(takesPlace);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -31,8 +30,7 @@ public class TakesPlaceController {
     public List<Event> getEventsHeldInVenue(@PathVariable int venueId) throws CustomException {
         try {
             return takesPlaceDAO.getEventsHeldInVenue(venueId);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -41,8 +39,7 @@ public class TakesPlaceController {
     public <T> List<TakesPlace> getTakesPlaceByAttribute(@PathVariable String attributeName, @PathVariable String attributeValue) throws CustomException {
         try {
             return takesPlaceDAO.getTakesPlaceByAttribute(attributeName, attributeValue);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
