@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class UserRepo implements UserDAO{
+public class UserRepo implements UserDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -26,13 +26,13 @@ public class UserRepo implements UserDAO{
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setUserId(rs.getInt("userId"));
-            user.setUserFirstName(rs.getString("firstName"));
-            user.setUserLastName(rs.getString("lastName"));
-            user.setUserEmail(rs.getString("email"));
-            user.setUserPassword(rs.getString("password"));
-            user.setUserContactNo(rs.getString("contactNo"));
-            user.setUserGender(rs.getString("gender"));
-            user.setUserDOB(rs.getDate("DOB"));
+            user.setFirstName(rs.getString("firstName"));
+            user.setLastName(rs.getString("lastName"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setContactNo(rs.getString("contactNo"));
+            user.setGender(rs.getString("gender"));
+            user.setDOB(rs.getDate("DOB"));
             return user;
         }
     }
@@ -47,23 +47,22 @@ public class UserRepo implements UserDAO{
 
             isCreated = jdbcTemplate.update(con -> {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, newUser.getUserFirstName());
-                ps.setString(2, newUser.getUserLastName());
-                ps.setString(3, newUser.getUserEmail());
-                ps.setString(4, newUser.getUserPassword());
-                ps.setString(5, newUser.getUserContactNo());
-                ps.setString(6, newUser.getUserGender());
-                ps.setDate(7, newUser.getUserDOB());
+                ps.setString(1, newUser.getFirstName());
+                ps.setString(2, newUser.getLastName());
+                ps.setString(3, newUser.getEmail());
+                ps.setString(4, newUser.getPassword());
+                ps.setString(5, newUser.getContactNo());
+                ps.setString(6, newUser.getGender());
+                ps.setDate(7, newUser.getDOB());
 
                 return ps;
             }, keyHolder);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isCreated == 0 || keyHolder.getKey() == null){
+        if (isCreated == 0 || keyHolder.getKey() == null) {
             throw new CustomException("User not inserted");
         }
         newUser.setUserId(keyHolder.getKey().intValue());
@@ -78,14 +77,13 @@ public class UserRepo implements UserDAO{
 
         int isUpdated;
         try {
-            isUpdated = jdbcTemplate.update(sql, updatedUser.getUserFirstName(), updatedUser.getUserLastName(), updatedUser.getUserEmail(), updatedUser.getUserPassword(),
-                    updatedUser.getUserContactNo(), updatedUser.getUserGender(), updatedUser.getUserDOB(), userId);
-        }
-        catch (Exception e){
+            isUpdated = jdbcTemplate.update(sql, updatedUser.getFirstName(), updatedUser.getLastName(), updatedUser.getEmail(), updatedUser.getPassword(),
+                    updatedUser.getContactNo(), updatedUser.getGender(), updatedUser.getDOB(), userId);
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isUpdated == 0){
+        if (isUpdated == 0) {
             throw new CustomException("Could not update user");
         }
         return updatedUser;
@@ -95,15 +93,14 @@ public class UserRepo implements UserDAO{
     public User getUserById(int userId) throws CustomException {
         String sql = "SELECT * FROM User WHERE userId = ?";
 
-        try{
+        try {
             List<User> ls = jdbcTemplate.query(sql, new UserMapper(), userId);
             if (ls.size() == 0) {
                 return null;
             } else {
                 return ls.get(0);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -112,15 +109,14 @@ public class UserRepo implements UserDAO{
     public User getUserByEmailId(String userEmailId) throws CustomException {
         String sql = "SELECT * FROM User WHERE email = ?";
 
-        try{
+        try {
             List<User> ls = jdbcTemplate.query(sql, new UserMapper(), userEmailId);
             if (ls.size() == 0) {
                 return null;
             } else {
                 return ls.get(0);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

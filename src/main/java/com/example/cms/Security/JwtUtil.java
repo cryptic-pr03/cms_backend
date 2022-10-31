@@ -1,5 +1,7 @@
 package com.example.cms.Security;
 
+import com.example.cms.dao.TypeUserDAO;
+import com.example.cms.dao.UserDAO;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,15 +12,25 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    private final UserDAO userRepo;
+
+    private final TypeUserDAO typeUserRepo;
+
     private final String jwtSecret = "DbmsProjectKey";
 
-    public String generateToken(Authentication authentication) {
+    public JwtUtil(UserDAO userRepo, TypeUserDAO typeUserRepo) {
+        this.userRepo = userRepo;
+        this.typeUserRepo = typeUserRepo;
+    }
 
+    public String generateToken(Authentication authentication, int userId, int typeUserCode) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
 
         int jwtExpirationMs = 5 * 60 * 60;
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
+                .claim("typeUserCode", typeUserCode)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)

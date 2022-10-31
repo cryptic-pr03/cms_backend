@@ -6,11 +6,16 @@ import java.util.HashMap;
 
 @Component
 public class Constants {
-    public final HashMap<Integer, String> roleValue;
+    public final HashMap<Integer, String> typeUserCode;
+
+    public final String FRONTEND_URL;
 
     public Constants() {
-        roleValue = new HashMap<>();
-        roleValue.put(1, "USER");
-        roleValue.put(2, "MANAGER");
+        typeUserCode = new HashMap<>();
+        typeUserCode.put(1, "AUDIENCE");
+        typeUserCode.put(2, "ARTIST_MANAGER");
+        typeUserCode.put(3, "STAFF");
+
+        FRONTEND_URL = "http://localhost:3000";
     }
 }
