@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 import com.example.cms.Models.Transaction;
 import com.example.cms.dao.CustomException;
@@ -12,6 +12,7 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionDAO transactionDAO;
+
     public TransactionController(TransactionDAO transactionDAO) {
         this.transactionDAO = transactionDAO;
     }
@@ -20,8 +21,7 @@ public class TransactionController {
     public Transaction addTrxn(@RequestBody Transaction transaction) throws CustomException {
         try {
             return transactionDAO.addTrxn(transaction);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -30,8 +30,7 @@ public class TransactionController {
     public List<Transaction> getTrxnsByUserId(@PathVariable int userId) throws CustomException {
         try {
             return transactionDAO.getTrxnsByUserId(userId);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -40,8 +39,7 @@ public class TransactionController {
     public List<Transaction> getTrxnsByEventId(@PathVariable int eventId) throws CustomException {
         try {
             return transactionDAO.getTrxnsByEventId(eventId);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

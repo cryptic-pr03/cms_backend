@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.controller;
 
 import com.example.cms.Models.WorksFor;
 import com.example.cms.dao.CustomException;
@@ -20,8 +20,7 @@ public class WorksForController {
     public WorksFor addWorksFor(@RequestBody WorksFor worksFor) throws CustomException {
         try {
             return worksForDAO.addWorksFor(worksFor);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -30,8 +29,7 @@ public class WorksForController {
     public boolean deleteWorksFor(@PathVariable int staffId, @PathVariable int eventId) throws CustomException {
         try {
             return worksForDAO.deleteWorksFor(staffId, eventId);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException("Could not delete works for with staffId: " + staffId + " and eventId: " + eventId);
         }
     }
@@ -40,8 +38,7 @@ public class WorksForController {
     public List<Integer> getAllWorkersByEvent(@PathVariable int eventId) throws CustomException {
         try {
             return worksForDAO.getAllWorkersByEvent(eventId);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -50,8 +47,7 @@ public class WorksForController {
     public List<Integer> getEventsByStaffId(@PathVariable int staffId) throws CustomException {
         try {
             return worksForDAO.getEventsByStaffId(staffId);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
