@@ -1,4 +1,4 @@
-package com.example.cms.Controller;
+package com.example.cms.Controllers;
 
 import com.example.cms.Models.Event;
 import com.example.cms.dao.EventDAO;
