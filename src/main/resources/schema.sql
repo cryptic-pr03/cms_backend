@@ -29,7 +29,7 @@ create table if not exists Staff (
     lastName varchar(50),
 --     COMPANY EMAIL
     email varchar(100) NOT NULL UNIQUE,
-    password varchar(100) NOT NULL default "password123.",
+    password varchar(100) NOT NULL default 'password123.',
     contactNo varchar(15),
     gender varchar(10),
     DOB date,
