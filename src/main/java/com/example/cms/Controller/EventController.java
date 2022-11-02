@@ -55,7 +55,12 @@ public class EventController {
 
     @GetMapping("/all")
     public ResponseEntity getAllEvents(){
-        return ResponseEntity.ok(eventRepo.getAllEvents());
+        try {
+            return ResponseEntity.ok(eventRepo.getAllEvents());
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @GetMapping("/id/{eventId}")

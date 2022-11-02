@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StaffRepo implements StaffDAO{
@@ -35,8 +36,6 @@ public class StaffRepo implements StaffDAO{
             staff.setLeavingDate(rs.getDate("leavingDate"));
             staff.setAccountNo(rs.getString("accountNo"));
             staff.setIFSCCode(rs.getString("IFSCCode"));
-            staff.setBankName(rs.getString("bankName"));
-            staff.setBranchName(rs.getString("branchName"));
             return staff;
 
         }
@@ -46,7 +45,8 @@ public class StaffRepo implements StaffDAO{
 
     @Override
     public Staff addStaff(Staff newStaff) throws CustomException {
-        String querySQL = "INSERT INTO Staff ( firstName, lastName,email ,password ,contactNo,gender,DOB,role,groupNumber,salary,venueId,joiningDate,leavingDate,accountNo,IFSCCode,bankName,branchName) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        //null  bank name, branch name
+        String querySQL = "INSERT INTO Staff ( firstName, lastName,email ,password ,contactNo,gender,DOB,role,groupNumber,salary,venueId,joiningDate,leavingDate,accountNo,IFSCCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         int isCreated ;
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -69,8 +69,6 @@ public class StaffRepo implements StaffDAO{
                 ps.setDate(13,newStaff.getLeavingDate());
                 ps.setString(14,newStaff.getAccountNo());
                 ps.setString(15,newStaff.getIFSCCode());
-                ps.setString(16,newStaff.getBankName());
-                ps.setString(17,newStaff.getBranchName());
 
                 return ps;
             } , keyHolder);
@@ -86,11 +84,11 @@ public class StaffRepo implements StaffDAO{
 
     @Override
     public Staff updateStaff(Staff updatedStaff) throws CustomException {
-        String querySQL = "UPDATE Staff SET firstName =?, lastName=?,email=? ,password=? ,contactNo=?,gender=?,DOB=?,role=?,groupNumber=?,salary=?,venueId=?,joiningDate=?,leavingDate=?,accountNo=?,IFSCCode=?,bankName=?,branchName=? WHERE staffId=?";
+        String querySQL = "UPDATE Staff SET firstName =?, lastName=?,email=? ,password=? ,contactNo=?,gender=?,DOB=?,role=?,groupNumber=?,salary=?,venueId=?,joiningDate=?,leavingDate=?,accountNo=?,IFSCCode=? WHERE staffId=?";
         int isUpdated;
         try{
             isUpdated = jdbcTemplate.update(querySQL , updatedStaff.getFirstName() ,updatedStaff.getLastName() , updatedStaff.getEmail() , updatedStaff.getPassword() , updatedStaff.getContactNo() ,updatedStaff.getGender(),
-                    updatedStaff.getDOB() , updatedStaff.getRole() , updatedStaff.getGroupNumber() , updatedStaff.getSalary() , updatedStaff.getVenueId() ,updatedStaff.getJoiningDate() ,updatedStaff.getLeavingDate() , updatedStaff.getAccountNo() , updatedStaff.getIFSCCode() , updatedStaff.getBankName() , updatedStaff.getBranchName(), updatedStaff.getStaffId());
+                    updatedStaff.getDOB() , updatedStaff.getRole() , updatedStaff.getGroupNumber() , updatedStaff.getSalary() , updatedStaff.getVenueId() ,updatedStaff.getJoiningDate() ,updatedStaff.getLeavingDate() , updatedStaff.getAccountNo() , updatedStaff.getIFSCCode() , updatedStaff.getStaffId());
         }catch (Exception e){
             throw new CustomException(e.getMessage());
         }
@@ -153,4 +151,10 @@ public class StaffRepo implements StaffDAO{
             throw new CustomException(e.getMessage());
         }
     }
+
+    @Override
+    public List<Map<String, Object>> getStaffByVenue(int venueId) {
+        return null;
+    }
+
 }

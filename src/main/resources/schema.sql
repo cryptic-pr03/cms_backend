@@ -17,14 +17,14 @@ create table if not exists Venue(
     landmark varchar(50),
     state varchar(50),
     isFunctional boolean,
---     seatMatrixDescription varchar(100),
+    seatMatrixDescription varchar(100),
     picSeatMatrixUrl varchar(100)
 );
 
 
 -- staff table modified
 create table if not exists Staff (
-    staffId int PRIMARY KEY AUTO_INCREMENT ,
+    staffId int PRIMARY KEY AUTO_INCREMENT,
     firstName varchar(50),
     lastName varchar(50),
 --     COMPANY EMAIL
@@ -35,15 +35,15 @@ create table if not exists Staff (
     DOB date,
     role int NOT NULL default 0,
     groupNumber int,
-    salary int,
+    salary int default 0,
 --     timings time,
-    venueId int ,
+    venueId int NOT NULL,
     joiningDate date,
     leavingDate date ,
     accountNo varchar(20),
     IFSCCode varchar(20),
-    bankName varchar(50),
-    branchName varchar(50),
+--     bankName varchar(50),
+--     branchName varchar(50),
     foreign key (venueId) references Venue(venueId) on delete cascade
 );
 
@@ -54,6 +54,7 @@ create table if not exists Event(
     endTime time,
     ageLimit int,
     eventDate date,
+    description varchar(200),
     logoUrl varchar(100)
 );
 
@@ -64,7 +65,6 @@ create table if not exists Seat(
     seatType varchar(20), 
     primary key (seatId, venueId),
     foreign key (venueId) references Venue(venueId) on delete cascade
-
 );
 
 -- venue id was removed and newName EventSeat
@@ -95,7 +95,7 @@ create table if not exists Slot (
     startTime time,
     endTime time,
     slotDate date,
-    price int,
+    price int default 0,
     isRented boolean default false,
     primary key (slotId, venueId, slotDate),
     foreign key (venueId) references Venue(venueId) on delete cascade
@@ -122,7 +122,6 @@ create table if not exists WorksFor (
     primary key (staffId,  eventId)
 );
 
-
 create table if not exists Sponsor (
     eventId int,
     sponsorName varchar(50),
@@ -140,8 +139,8 @@ create table if not exists Pic(
 create table if not exists Salary(
     staffId int,
     timeOfPayment datetime,
-    amount int,
-    bonus int,
+--     amount int,
+    bonus int default 0,
     paidStatus boolean default false,
     foreign key (staffId) references Staff(staffId) on delete cascade,
     primary key (staffId, timeOfPayment)
@@ -173,11 +172,12 @@ create table if not exists SeatBook(
 
 
 create table if not exists BankDetails(
-    accountNo varchar(20) primary key,
+    accountNo varchar(20),
     IfscCode varchar(20),
-    bankName varchar(50),
-    branchName varchar(50),
+--     bankName varchar(50),
+--     branchName varchar(50),
     userId int,
+    primary key (userId, accountNo),
     foreign key (userId) references User(userId) on delete cascade
 );
 

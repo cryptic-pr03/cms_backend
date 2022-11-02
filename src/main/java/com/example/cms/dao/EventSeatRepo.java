@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EventSeatRepo implements EventSeatDAO{
@@ -35,17 +36,21 @@ public class EventSeatRepo implements EventSeatDAO{
             eventSeat.setSeatId(rs.getInt("seatId"));
             eventSeat.setEventId(rs.getInt("eventId"));
             eventSeat.setBooked(rs.getBoolean("isBooked"));
-            eventSeat.setEventId(rs.getInt("price"));
+            eventSeat.setPrice(rs.getInt("price"));
             return eventSeat;
         }
     }
 
     @Override
-    public List<EventSeat> getEventSeatDetails(int eventId) throws CustomException {
-        String sql = "SELECT * FROM EventSeat WHERE eventId = ?";
+    public List<Map<String, Object>> getEventSeatDetails(int eventId) throws CustomException {
+        String sql =
+                "SELECT es.seatId, es.eventId, es.isBooked, es.price, s.seatType " +
+                "FROM EventSeat es, Seat s WHERE es.eventId = ? " +
+                "AND es.seatId = s.seatId " +
+                "AND s.venueId = (SELECT t.venueId FROM TakesPlace t WHERE t.eventId = es.eventId) ";
 
         try{
-            return jdbcTemplate.query(sql, new EventSeatMapper(), eventId);
+            return jdbcTemplate.queryForList(sql, eventId);
         }
         catch (Exception e){
             throw new CustomException(e.getMessage());

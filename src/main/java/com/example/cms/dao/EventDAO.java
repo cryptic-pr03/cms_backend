@@ -2,6 +2,7 @@ package com.example.cms.dao;
 
 import com.example.cms.Models.Event;
 import java.util.List;
+import java.util.Map;
 
 public interface EventDAO {
     //add an event --> arist manager when logged in can add a new event
@@ -14,7 +15,7 @@ public interface EventDAO {
     Boolean deleteEvent(int eventId) throws CustomException;
 
     // get list of all events --> visible to everyone
-    List<Event> getAllEvents();
+    List<Map<String, Object>> getAllEvents();
     //get details of a specific event --> visible to everyone
 
     Event getEventById(int eventId) throws CustomException;

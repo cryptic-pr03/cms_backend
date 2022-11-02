@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public class SalaryRepo implements SalaryDAO{
     private final JdbcTemplate jdbcTemplate;
+    //null amount
 
     public SalaryRepo(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -24,7 +25,6 @@ public class SalaryRepo implements SalaryDAO{
             Salary salary = new Salary();
             salary.setStaffId(rs.getInt("staffId"));
             salary.setTimeOfPayment(rs.getTimestamp("timeOfPayment"));
-            salary.setAmount(rs.getInt("amount"));
             salary.setBonus(rs.getInt("bonus"));
             salary.setPaidStatus(rs.getBoolean("paidStatus"));
             return salary;
@@ -33,12 +33,11 @@ public class SalaryRepo implements SalaryDAO{
     @Override
     public Salary addSalary(Salary newSalary) throws CustomException {
         String sql =
-                "INSERT INTO Salary(staffId, timeOfPayment, amount, bonus, paidStatus) " +
-                        "VALUES(?,?,?,?,?)";
+                "INSERT INTO Salary(staffId, timeOfPayment, bonus, paidStatus) " +
+                        "VALUES(?,?,?,?)";
         int isCreated;
 
-        isCreated = jdbcTemplate.update(sql, newSalary.getStaffId(), newSalary.getTimeOfPayment(),
-                newSalary.getAmount(), newSalary.getBonus(),
+        isCreated = jdbcTemplate.update(sql, newSalary.getStaffId(), newSalary.getTimeOfPayment(), newSalary.getBonus(),
                 newSalary.getPaidStatus());
 
         if(isCreated == 0){

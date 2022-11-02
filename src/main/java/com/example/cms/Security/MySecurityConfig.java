@@ -56,7 +56,7 @@ public class MySecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .authorizeRequests().antMatchers("/", "/login", "/register").permitAll()
+                .authorizeRequests().antMatchers("/", "/login", "/register", "/event/**").permitAll()
                 .anyRequest().authenticated()
                 .and().authenticationProvider(authenticationProvider());
 
