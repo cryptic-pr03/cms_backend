@@ -4,8 +4,6 @@ public class BankDetails {
 
     private int accountNo;
     private int IfscCode;
-    private String bankName;
-    private String branchName;
     private int userId;
 
     public BankDetails() {
@@ -13,11 +11,9 @@ public class BankDetails {
     }
 
 
-    public BankDetails(int accountNo, int IfscCode, String bankName, String branchName, int userId) {
+    public BankDetails(int accountNo, int IfscCode, int userId) {
         this.accountNo = accountNo;
         this.IfscCode = IfscCode;
-        this.bankName = bankName;
-        this.branchName = branchName;
         this.userId = userId;
     }
 
@@ -37,22 +33,6 @@ public class BankDetails {
         this.IfscCode = IfscCode;
     }
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBranchName() {
-        return branchName;
-    }
-
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -66,8 +46,6 @@ public class BankDetails {
         return "BankDetails{" +
                 "accountNo=" + accountNo +
                 ", IfscCode=" + IfscCode +
-                ", bankName='" + bankName + '\'' +
-                ", branchName='" + branchName + '\'' +
                 ", userId=" + userId +
                 '}';
     }

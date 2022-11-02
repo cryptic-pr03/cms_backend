@@ -19,6 +19,7 @@ public class BankDetailsRepo implements BankDetailsDAO{
 
     private final JdbcTemplate jdbcTemplate;
 
+    //null bank name, branch name, changed primary key
     public BankDetailsRepo(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -29,8 +30,6 @@ public class BankDetailsRepo implements BankDetailsDAO{
             BankDetails bankDetails = new BankDetails();
             bankDetails.setAccountNo(rs.getInt("accountNo"));
             bankDetails.setIfscCode(rs.getInt("IfscCode"));
-            bankDetails.setBankName(rs.getString("bankName"));
-            bankDetails.setBranchName(rs.getString("branchName"));
             bankDetails.setUserId(rs.getInt("userId"));
             return bankDetails;
         }
@@ -38,10 +37,10 @@ public class BankDetailsRepo implements BankDetailsDAO{
 
     @Override
     public BankDetails addBankDetails(BankDetails newBankDetails) throws CustomException {
-        String sql = "INSERT INTO BankDetails(accountNo, IfscCode, bankName, branchName, userId) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO BankDetails(accountNo, IfscCode, userId) VALUES(?,?,?)"; //change
 
 
-            int isCreated = jdbcTemplate.update(sql, newBankDetails.getAccountNo(), newBankDetails.getIfscCode(), newBankDetails.getBankName(), newBankDetails.getBranchName(),newBankDetails.getUserId());
+            int isCreated = jdbcTemplate.update(sql, newBankDetails.getAccountNo(), newBankDetails.getIfscCode(),newBankDetails.getUserId());
 
             if(isCreated == 0){
                 throw new CustomException("Could not insert bank details");
@@ -50,12 +49,12 @@ public class BankDetailsRepo implements BankDetailsDAO{
     }
 
     @Override
-    public Boolean deleteBankDetails(int accountNo) throws CustomException {
-        String sql = "DELETE FROM BankDetails WHERE accountNo = ?";
+    public Boolean deleteBankDetails(int accountNo, int userId) throws CustomException {
+        String sql = "DELETE FROM BankDetails WHERE accountNo = ? AND userId = ?"; //change
 
         int isDeleted;
         try{
-            isDeleted = jdbcTemplate.update(sql, accountNo);
+            isDeleted = jdbcTemplate.update(sql, accountNo, userId);
         }
         catch (Exception e){
             throw new CustomException(e.getMessage());
@@ -75,15 +74,6 @@ public class BankDetailsRepo implements BankDetailsDAO{
         catch (Exception e){
             throw new CustomException(e.getMessage());
         }
-    }
-
-    @Override
-    public <T> List<BankDetails> getBankDetailsByAttribute(String attributeName, T attributeValue)
-    {
-        String sql = "SELECT * FROM BankDetails WHERE " + attributeName + " = ?";
-
-            return jdbcTemplate.query(sql, new BankDetailsMapper(), attributeValue);
-
     }
 
 

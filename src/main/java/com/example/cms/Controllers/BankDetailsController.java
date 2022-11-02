@@ -26,20 +26,12 @@ public class BankDetailsController {
         }
     }
 
-    @GetMapping("/bankDetails/{attributeName}/{attributeValue}")
-    public <T> List<BankDetails> getBankDetailsByAttribute(@PathVariable("attributeName") String attributeName, @PathVariable("attributeValue") T attributeValue) throws CustomException {
-        try {
-            List<BankDetails> bankDetailsList = bankDetailsDAO.getBankDetailsByAttribute(attributeName, attributeValue);
-            return bankDetailsList;
-        } catch (Exception e) {
-            throw new CustomException(e.getMessage());
-        }
-    }
 
-    @DeleteMapping("/delete/{accountNo}")
-    public Boolean deleteBankDetails(@PathVariable("accountNo") int accountNo) throws CustomException {
+
+    @DeleteMapping("/delete/{accountNo}/{userId}")
+    public Boolean deleteBankDetails(@PathVariable("accountNo") int accountNo, @PathVariable("userId") int userId) throws CustomException {
         try {
-            return bankDetailsDAO.deleteBankDetails(accountNo);
+            return bankDetailsDAO.deleteBankDetails(accountNo,userId);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }

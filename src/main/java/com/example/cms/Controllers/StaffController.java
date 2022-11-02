@@ -4,6 +4,7 @@ import com.example.cms.Models.Staff;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.StaffDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 @RequestMapping("/staff")
 public class StaffController {
     @Autowired
-    StaffDAO staffDAO;
+    private StaffDAO staffDAO;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('VENUE_MANAGER') or hasAuthority('ADMIN')")
     public Staff addStaff(@RequestBody Staff staff) throws CustomException {
         try {
-            Staff addedStaff = staffDAO.addStaff(staff);
-            return addedStaff;
+            return staffDAO.addStaff(staff);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
@@ -27,8 +28,7 @@ public class StaffController {
     @PutMapping
     public Staff updateStaff(@RequestBody Staff staff) throws CustomException {
         try {
-            Staff updatedStaff = staffDAO.updateStaff(staff);
-            return updatedStaff;
+            return staffDAO.updateStaff(staff);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }

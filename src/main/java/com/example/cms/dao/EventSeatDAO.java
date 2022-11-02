@@ -3,12 +3,13 @@ package com.example.cms.dao;
 import com.example.cms.Models.EventSeat;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EventSeatDAO {
 
     // get the details of seats of that event --> used by audience while selecting seats for booking for an event
     // SUGGEST : what need do we have of venueID
-    List<EventSeat> getEventSeatDetails(int eventId) throws CustomException;
+    List<Map<String, Object>> getEventSeatDetails(int eventId) throws CustomException;
 
     // IDK WHEN TO USE
     EventSeat getSeat(int seatId, int eventId) throws CustomException;

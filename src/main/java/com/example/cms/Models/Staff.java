@@ -21,8 +21,6 @@ public class Staff {
     private Date leavingDate;
     private String accountNo;
     private String IFSCCode;
-    private String bankName;
-    private String branchName;
 
 
 
@@ -30,7 +28,7 @@ public class Staff {
 
     }
 
-    public Staff(int staffId, String firstName, String lastName, String email, String password, String contactNo, String gender, Date DOB, int role, int groupNumber, int salary, int venueId, Date joiningDate, Date leavingDate, String accountNo, String IFSCCode, String bankName, String branchName) {
+    public Staff(int staffId, String firstName, String lastName, String email, String password, String contactNo, String gender, Date DOB, int role, int groupNumber, int salary, int venueId, Date joiningDate, Date leavingDate, String accountNo, String IFSCCode) {
         this.staffId = staffId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,8 +45,6 @@ public class Staff {
         this.leavingDate = leavingDate;
         this.accountNo = accountNo;
         this.IFSCCode = IFSCCode;
-        this.bankName = bankName;
-        this.branchName = branchName;
     }
 
     @Override
@@ -70,8 +66,6 @@ public class Staff {
                 ", leavingDate=" + leavingDate +
                 ", accountNo='" + accountNo + '\'' +
                 ", IFSCCode='" + IFSCCode + '\'' +
-                ", bankName='" + bankName + '\'' +
-                ", branchName='" + branchName + '\'' +
                 '}';
     }
 
@@ -203,22 +197,6 @@ public class Staff {
 
     public void setIFSCCode(String IFSCCode) {
         this.IFSCCode = IFSCCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBranchName() {
-        return branchName;
-    }
-
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
     }
 
 }

@@ -11,19 +11,21 @@ public class Event {
     private Time endTime;
     private int ageLimit;
     private Date eventDate;
+    private String description;
     private String logoUrl;
 
     public Event() {
 
     }
 
-    public Event(int eventId, String name, Time startTime, Time endTime, int ageLimit, Date eventDate, String logoUrl) {
+    public Event(int eventId, String name, Time startTime, Time endTime, int ageLimit, Date eventDate, String eventDesc, String logoUrl) {
         this.eventId = eventId;
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.ageLimit = ageLimit;
         this.eventDate = eventDate;
+        this.description = eventDesc;
         this.logoUrl = logoUrl;
     }
 
@@ -75,6 +77,14 @@ public class Event {
         this.ageLimit = age;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getEventLogoUrl(){
         return logoUrl;
     }
@@ -92,6 +102,7 @@ public class Event {
                 ", endTime=" + endTime +
                 ", ageLimit=" + ageLimit +
                 ", eventDate=" + eventDate +
+                ", description='" + description + '\'' +
                 ", logoUrl='" + logoUrl + '\'' +
                 '}';
     }

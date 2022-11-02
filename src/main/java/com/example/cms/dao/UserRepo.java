@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserRepo implements UserDAO {
@@ -119,5 +120,29 @@ public class UserRepo implements UserDAO {
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllSeatBookingsOfUser(int userId) {
+        String sql =
+                "SELECT eventId, name AS EventName, startTime, endTime, ageLimit, eventDate, " +
+                "description, logoUrl, transactionId, date AS transactionDate, time AS transactionTime " +
+                "type FROM Event e, Transaction t WHERE t.userId = ? AND e.eventId = t.eventId " +
+                "AND type LIKE 'AUDIENCE'";
+
+        List<Map<String, Object>> res = jdbcTemplate.queryForList(sql, userId);
+
+        for(Map<String, Object> obj : res) {
+            int tId = (int) obj.get("transactionId");
+            int eId = (int) obj.get("eventId");
+
+            String sqlQuery = "SELECT es.seatId, es.price FROM EventSeat es, SeatBook sb " +
+                              "WHERE sb.eventId = ? AND sb.transactionId = ? AND " +
+                              "sb.seatId = es.seatId AND es.eventId = sb.eventId";
+
+            obj.put("seats", jdbcTemplate.queryForList(sqlQuery, eId, tId));
+        }
+
+        return res;
     }
 }

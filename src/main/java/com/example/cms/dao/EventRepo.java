@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EventRepo implements EventDAO {
@@ -31,6 +32,7 @@ public class EventRepo implements EventDAO {
             event.setEventEndTime(rs.getTime("endTime"));
             event.setEventDate(rs.getDate("eventDate"));
             event.setEventAge(rs.getInt("ageLimit"));
+            event.setDescription(rs.getString("description"));
             event.setEventLogoUrl(rs.getString("logoUrl"));
             return event;
         }
@@ -38,7 +40,7 @@ public class EventRepo implements EventDAO {
 
     @Override
     public Event addEvent(Event newEvent) throws CustomException {
-        String sql = "INSERT INTO Event(name, startTime, endTime, eventDate, ageLimit, logoUrl) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Event(name, startTime, endTime, eventDate, ageLimit, description, logoUrl) VALUES(?,?,?,?,?,?,?)";
 
         int isCreated;
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -51,7 +53,8 @@ public class EventRepo implements EventDAO {
                 ps.setTime(3, newEvent.getEventEndTime());
                 ps.setDate(4, newEvent.getEventDate());
                 ps.setInt(5, newEvent.getEventAge());
-                ps.setString(6, newEvent.getEventLogoUrl());
+                ps.setString(6, newEvent.getDescription());
+                ps.setString(7, newEvent.getEventLogoUrl());
 
                 return ps;
             }, keyHolder);
@@ -72,13 +75,13 @@ public class EventRepo implements EventDAO {
     @Override
     public Event updateEvent(int eventId, Event updatedEvent) throws CustomException {
         String sql = "UPDATE Event " +
-                "SET name = ?, startTime = ?, endTime = ?, eventDate = ?, ageLimit = ?, logoUrl = ?" +
+                "SET name = ?, startTime = ?, endTime = ?, eventDate = ?, ageLimit = ?, description = ?, logoUrl = ?" +
                 "WHERE eventId = ?";
 
         int isUpdated;
         try {
             isUpdated = jdbcTemplate.update(sql, updatedEvent.getEventName(), updatedEvent.getEventStartTime(), updatedEvent.getEventEndTime(),
-                    updatedEvent.getEventDate(), updatedEvent.getEventAge(), updatedEvent.getEventLogoUrl(), eventId);
+                    updatedEvent.getEventDate(), updatedEvent.getEventAge(), updatedEvent.getDescription(), updatedEvent.getEventLogoUrl(), eventId);
         }
         catch (Exception e){
             throw new CustomException(e.getMessage());
@@ -106,10 +109,27 @@ public class EventRepo implements EventDAO {
     }
 
     @Override
-    public List<Event> getAllEvents()
-    {
-        String sql = "SELECT * FROM Event";
-        return jdbcTemplate.query(sql, new EventMapper());
+    public List<Map<String, Object>> getAllEvents() {
+        List<Map<String, Object>> res;
+
+        // add v.seatMatrixDescription e.description
+        String sql =
+                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit,  " +
+                "logoUrl, venueId, v.name AS venueName, capacity, city, landmark, " +
+                "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
+                "contactNo FROM Event e, Venue v, User u WHERE u.userId = " +
+                "(SELECT userId FROM Transaction tr WHERE tr.eventId = e.eventId AND type LIKE 'ARTIST_MANAGER') " +
+                "AND v.venueId = (SELECT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId)";
+
+        res = jdbcTemplate.queryForList(sql);
+
+        for(Map<String, Object> obj : res) {
+            int eventId = (int) obj.get("eventId");
+            List<String> sp = jdbcTemplate.queryForList("SELECT sponsorName FROM Sponsor WHERE eventId = ?", String.class, eventId);
+            obj.put("sponsors", sp);
+        }
+
+        return res;
     }
 
     @Override
