@@ -1,10 +1,12 @@
 package com.example.cms.Controllers;
 
 
+import com.example.cms.Models.Staff;
 import com.example.cms.Models.TypeUser;
 import com.example.cms.Models.User;
 import com.example.cms.Security.JwtUtil;
 import com.example.cms.dao.CustomException;
+import com.example.cms.dao.StaffDAO;
 import com.example.cms.dao.TypeUserDAO;
 import com.example.cms.dao.UserDAO;
 import org.springframework.http.ResponseEntity;
@@ -32,14 +34,35 @@ public class SecurityController {
     private final AuthenticationManager authManager;
     private final UserDAO userRepo;
     private final TypeUserDAO typeUserRepo;
+    private final StaffDAO staffRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public SecurityController(JwtUtil jwtUtil, AuthenticationManager authManager, UserDAO userRepo, TypeUserDAO typeUserRepo, PasswordEncoder passwordEncoder) {
+    public SecurityController(JwtUtil jwtUtil, AuthenticationManager authManager, UserDAO userRepo, TypeUserDAO typeUserRepo, StaffDAO staffRepo, PasswordEncoder passwordEncoder) {
         this.jwtUtil = jwtUtil;
         this.authManager = authManager;
         this.userRepo = userRepo;
         this.typeUserRepo = typeUserRepo;
+        this.staffRepo = staffRepo;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public ResponseEntity<?> staffLogin(String email, String password, int typeUserCode) {
+        try {
+            Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            Staff currentUser = staffRepo.getStaffByEmailId(email);
+
+            String token = jwtUtil.generateToken(auth, currentUser.getStaffId(), typeUserCode);
+
+            Map<String, Object> returnObj = new HashMap<>();
+            returnObj.put("token", token);
+            returnObj.put("isPresent", true);
+            return ResponseEntity.ok(returnObj);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Invalid username or password");
+        }
     }
 
     @PostMapping(value = "/login", consumes = "application/json")
@@ -51,18 +74,20 @@ public class SecurityController {
         String password = (String) req.get("password");
         int typeUserCode = (Integer) req.get("typeUserCode");
 
+        if (typeUserCode >= 3) {
+            return staffLogin(email, password, typeUserCode);
+        }
+
         try {
             Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-//        UserDetails obj = (UserDetails) auth.getPrincipal();
             User currentUser = userRepo.getUserByEmailId(email);
             List<Integer> roles = typeUserRepo.getRolesByUserId(currentUser.getUserID());
             boolean isPresent = roles.contains(typeUserCode);
 
             String token = jwtUtil.generateToken(auth, currentUser.getUserID(), typeUserCode);
 
-//            System.out.println(auth.getPrincipal());
             Map<String, Object> returnObj = new HashMap<>();
             returnObj.put("token", token);
             returnObj.put("isPresent", isPresent);

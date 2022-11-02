@@ -54,7 +54,10 @@ public class MyUserDetailsService implements UserDetailsService {
             Staff user = staffRepo.getStaffByEmailId(userEmailId);
 
             if (user != null) {
-                return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+                ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                int role = user.getRole();
+                authorities.add(new SimpleGrantedAuthority(cnts.typeUserCode.get(role)));
+                return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
             }
 
         } catch (CustomException e) {
