@@ -10,7 +10,6 @@ public class User {
     private String email;
     private String password;
     private String contactNo;
-
     private String gender;
     private Date DOB;
 
