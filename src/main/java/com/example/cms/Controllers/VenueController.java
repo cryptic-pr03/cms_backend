@@ -1,8 +1,10 @@
 package com.example.cms.Controllers;
 
 import com.example.cms.Models.Venue;
+import com.example.cms.dao.StaffDAO;
 import com.example.cms.dao.VenueDAO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class VenueController {
 
     private final VenueDAO venueRepo;
+    private final StaffDAO staffRepo;
 
-    public VenueController(VenueDAO venueRepo) {
+    public VenueController(VenueDAO venueRepo, StaffDAO staffRepo) {
         this.venueRepo = venueRepo;
+        this.staffRepo = staffRepo;
     }
 
     @PostMapping
@@ -68,10 +72,21 @@ public class VenueController {
         }
     }
 
-    @GetMapping("attribute/{attributeName}/{attributeValue}")
+    @GetMapping("/attribute/{attributeName}/{attributeValue}")
     public ResponseEntity getvenueByAttribute(@PathVariable String attributeName, @PathVariable Object attributeValue){
         try {
             return ResponseEntity.ok(venueRepo.getVenueByAttribute(attributeName, attributeValue));
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/staff/{venueId}")
+    @PreAuthorize("hasAnyAuthority('VENUE_MANAGER', 'ADMIN')")
+    public ResponseEntity getStaffByVenue(@PathVariable int venueId){
+        try{
+            return ResponseEntity.ok(staffRepo.getStaffByVenue(venueId));
         }
         catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());

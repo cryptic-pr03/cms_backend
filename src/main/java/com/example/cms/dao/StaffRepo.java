@@ -4,7 +4,9 @@ import com.example.cms.Models.Staff;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -154,7 +156,23 @@ public class StaffRepo implements StaffDAO{
 
     @Override
     public List<Map<String, Object>> getStaffByVenue(int venueId) {
-        return null;
+        String sql = "SELECT * FROM Staff WHERE venueId = ?";
+
+        List<Map<String, Object>> ls = jdbcTemplate.queryForList(sql, venueId);
+
+        for(Map<String, Object> obj : ls){
+            obj.remove("password");
+        }
+
+        return ls;
     }
 
+
+    @Override
+    public List<Map<String, Object>> getSchedule(int staffId) {
+        String sql =
+                "SELECT * FROM Event e, WorksFor w WHERE w.staffId = ? AND e.eventId = w.eventId " +
+                "ORDER BY e.eventDate, e.startTime";
+        return jdbcTemplate.queryForList(sql, staffId);
+    }
 }

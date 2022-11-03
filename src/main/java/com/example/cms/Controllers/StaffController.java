@@ -4,6 +4,7 @@ import com.example.cms.Models.Staff;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.StaffDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class StaffController {
     private StaffDAO staffDAO;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('VENUE_MANAGER') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('VENUE_MANAGER', 'ADMIN')")
     public Staff addStaff(@RequestBody Staff staff) throws CustomException {
         try {
             return staffDAO.addStaff(staff);
@@ -26,6 +27,7 @@ public class StaffController {
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('STAFF', 'VENUE_MANAGER', 'ADMIN')")
     public Staff updateStaff(@RequestBody Staff staff) throws CustomException {
         try {
             return staffDAO.updateStaff(staff);
@@ -55,11 +57,20 @@ public class StaffController {
     @GetMapping("attribute/{attributeName}/{attributeValue}")
     public <T> List<Staff> getStaffByAttribute(@PathVariable String attributeName, @PathVariable T attributeValue) throws CustomException {
         try {
-            List<Staff> ls = staffDAO.getStaffByAttribute(attributeName, attributeValue);
-            return ls;
+            return staffDAO.getStaffByAttribute(attributeName, attributeValue);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
 
+    @GetMapping("/schedule/{staffId}")
+    @PreAuthorize("hasAnyAuthority('STAFF', 'VENUE_MANAGER', 'ADMIN')")
+    public ResponseEntity getSchedule(@PathVariable int staffId) {
+        try {
+            return ResponseEntity.ok(staffDAO.getSchedule(staffId));
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 }

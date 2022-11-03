@@ -13,4 +13,5 @@ public interface StaffDAO {
     Staff getStaffByEmailId(String StaffEmailId) throws CustomException;
     <T> List<Staff> getStaffByAttribute(String attributeName, T attributeValue) throws CustomException;
     List<Map<String, Object>> getStaffByVenue(int venueId);
+    List<Map<String, Object>> getSchedule(int staffId);
 }

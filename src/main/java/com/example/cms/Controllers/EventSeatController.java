@@ -4,12 +4,14 @@ import com.example.cms.Models.EventSeat;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.EventSeatDAO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/eventSeat")
+@PreAuthorize("isAuthenticated()")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EventSeatController {
 
@@ -20,6 +22,8 @@ public class EventSeatController {
     }
 
     @GetMapping("/{eventId}")
+//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity getEventSeatDetails(@PathVariable int eventId){
         try {
             return ResponseEntity.ok(eventSeatRepo.getEventSeatDetails(eventId));

@@ -3,12 +3,10 @@ package com.example.cms.dao;
 
 import com.example.cms.Models.WorksFor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class WorksForRepo implements WorksForDAO {
@@ -16,16 +14,6 @@ public class WorksForRepo implements WorksForDAO {
 
     public WorksForRepo(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-    }
-
-    private static class WorksForMapper implements RowMapper<WorksFor> {
-        @Override
-        public WorksFor mapRow(ResultSet rs, int rowNum) throws SQLException {
-            WorksFor worksFor = new WorksFor();
-            worksFor.setStaffId(rs.getInt("staffId"));
-            worksFor.setEventId(rs.getInt("eventId"));
-            return worksFor;
-        }
     }
 
     @Override
@@ -67,5 +55,15 @@ public class WorksForRepo implements WorksForDAO {
     public List<Integer> getEventsByStaffId(int staffId) {
         String sql = "SELECT eventId FROM WorksFor WHERE staffId = ?";
         return jdbcTemplate.queryForList(sql, Integer.class, staffId);
+    }
+
+    @Override
+    public void assignWork(int eventId, int groupNo){
+        String sql =
+                "INSERT INTO WorksFor(staffId, eventId) " +
+                "SELECT s.staffId, e.eventId FROM Staff s, Event e " +
+                "WHERE e.eventId = ? AND s.venueId = (SELECT t.venueId FROM TakesPlace t WHERE t.eventId = e.eventId) " +
+                "AND s.groupNumber = ? AND s.role LIKE 'STAFF'";
+        jdbcTemplate.update(sql, eventId, groupNo);
     }
 }
