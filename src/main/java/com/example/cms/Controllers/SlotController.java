@@ -4,6 +4,7 @@ import com.example.cms.Models.Slot;
 import com.example.cms.dao.CustomException;
 import com.example.cms.dao.SlotDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -51,6 +52,16 @@ public class SlotController {
             return updatedSlot;
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity slots(){
+        try {
+            return ResponseEntity.ok(slotDAO.getAllSlots());
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 

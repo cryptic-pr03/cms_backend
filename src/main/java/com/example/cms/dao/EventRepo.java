@@ -114,7 +114,7 @@ public class EventRepo implements EventDAO {
 
         // add v.seatMatrixDescription e.description
         String sql =
-                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit,  " +
+                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit, description, " +
                 "logoUrl, venueId, v.name AS venueName, capacity, city, landmark, " +
                 "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
                 "contactNo FROM Event e, Venue v, User u WHERE u.userId = " +

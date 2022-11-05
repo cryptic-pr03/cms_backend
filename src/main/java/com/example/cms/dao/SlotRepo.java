@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class SlotRepo implements SlotDAO{
@@ -84,5 +85,11 @@ public class SlotRepo implements SlotDAO{
             throw new CustomException(e.getMessage());
         }
 
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllSlots(){
+        String sql = "SELECT * FROM Slot";
+        return jdbcTemplate.queryForList(sql);
     }
 }

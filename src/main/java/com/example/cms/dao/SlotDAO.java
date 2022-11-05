@@ -4,6 +4,7 @@ import com.example.cms.Models.Slot;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface SlotDAO {
     // at the beginning of a week, the Venue Manager will add the slot details for the next 7th day
@@ -13,4 +14,5 @@ public interface SlotDAO {
     Slot updateSlot (Slot newSlot, int venueId, int slotId, Date slotDate) throws CustomException;
     Boolean deleteSlot(int venueId, int slotId, Date slotDate) throws CustomException;
     <T> List<Slot> getSlotByAttribute(String attributeName, T attributeValue) throws CustomException;
+    List<Map<String, Object>> getAllSlots();
 }

@@ -42,7 +42,7 @@ public class VenueController {
         }
     }
 
-    @DeleteMapping("/delete/{venueId}")
+    @DeleteMapping("/{venueId}")
     public ResponseEntity deleteVenue(@PathVariable int venueId){
         try{
             if (venueRepo.deleteVenue(venueId)){
