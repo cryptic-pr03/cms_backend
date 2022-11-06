@@ -79,7 +79,7 @@ public class VenueRepo implements VenueDAO {
     @Override
     public Venue updateVenue(int venueId, Venue updatedVenue) throws CustomException {
         String sql = "UPDATE Venue " +
-                "SET name = ?, silverSeats= ?, goldSeats=?, platinumSeats=?, city = ?, landmark = ?, state = ?, isAvailable = ?, picSeatMatrixUrl = ? " +
+                "SET name = ?, silverSeats= ?, goldSeats=?, platinumSeats=?, city = ?, landmark = ?, state = ?, isFunctional = ?, picSeatMatrixUrl = ? " +
                 "WHERE venueId = ?";
 
         int isUpdated;

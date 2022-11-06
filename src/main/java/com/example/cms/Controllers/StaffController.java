@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/staff")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StaffController {
     @Autowired
     private StaffDAO staffDAO;
@@ -36,7 +37,7 @@ public class StaffController {
         }
     }
 
-    @DeleteMapping("/delete/{staffId}")
+    @DeleteMapping("/{staffId}")
     public Boolean delete(@PathVariable int staffId) throws CustomException {
         try {
             return staffDAO.delete(staffId);
@@ -68,8 +69,7 @@ public class StaffController {
     public ResponseEntity getSchedule(@PathVariable int staffId) {
         try {
             return ResponseEntity.ok(staffDAO.getSchedule(staffId));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

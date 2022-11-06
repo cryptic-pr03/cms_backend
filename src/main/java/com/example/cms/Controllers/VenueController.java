@@ -55,6 +55,8 @@ public class VenueController {
     @PutMapping
     public ResponseEntity updateVenue(@RequestBody Venue venue) {
         try {
+            System.out.print("edit : ");
+            System.out.println(venue);
             Venue updatedVenue = venueRepo.updateVenue(venue.getVenueId(), venue);
             return ResponseEntity.ok(updatedVenue);
         } catch (Exception e) {

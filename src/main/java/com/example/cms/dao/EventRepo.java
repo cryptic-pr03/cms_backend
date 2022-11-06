@@ -59,12 +59,11 @@ public class EventRepo implements EventDAO {
                 return ps;
             }, keyHolder);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isCreated == 0 || keyHolder.getKey() == null){
+        if (isCreated == 0 || keyHolder.getKey() == null) {
             throw new CustomException("Event not inserted");
         }
 
@@ -82,12 +81,11 @@ public class EventRepo implements EventDAO {
         try {
             isUpdated = jdbcTemplate.update(sql, updatedEvent.getEventName(), updatedEvent.getEventStartTime(), updatedEvent.getEventEndTime(),
                     updatedEvent.getEventDate(), updatedEvent.getEventAge(), updatedEvent.getDescription(), updatedEvent.getEventLogoUrl(), eventId);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isUpdated == 0){
+        if (isUpdated == 0) {
             throw new CustomException("Could not update event");
         }
         return updatedEvent;
@@ -98,10 +96,9 @@ public class EventRepo implements EventDAO {
         String sql = "DELETE FROM Event WHERE eventId = ?";
 
         int isDeleted;
-        try{
+        try {
             isDeleted = jdbcTemplate.update(sql, eventId);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
@@ -115,15 +112,15 @@ public class EventRepo implements EventDAO {
         // add v.seatMatrixDescription e.description
         String sql =
                 "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit, description, " +
-                "logoUrl, venueId, v.name AS venueName, capacity, city, landmark, " +
-                "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
-                "contactNo FROM Event e, Venue v, User u WHERE u.userId = " +
-                "(SELECT userId FROM Transaction tr WHERE tr.eventId = e.eventId AND type LIKE 'ARTIST_MANAGER') " +
-                "AND v.venueId = (SELECT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId)";
+                        "logoUrl, venueId, v.name AS venueName, (silverSeats + goldSeats + platinumSeats) as capacity, city, landmark, " +
+                        "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
+                        "contactNo FROM Event e, Venue v, User u WHERE u.userId = " +
+                        "(SELECT userId FROM Transaction tr WHERE tr.eventId = e.eventId AND type LIKE 'ARTIST_MANAGER') " +
+                        "AND v.venueId = (SELECT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId)";
 
         res = jdbcTemplate.queryForList(sql);
 
-        for(Map<String, Object> obj : res) {
+        for (Map<String, Object> obj : res) {
             int eventId = (int) obj.get("eventId");
             List<String> sp = jdbcTemplate.queryForList("SELECT sponsorName FROM Sponsor WHERE eventId = ?", String.class, eventId);
             obj.put("sponsors", sp);
@@ -136,27 +133,24 @@ public class EventRepo implements EventDAO {
     public Event getEventById(int eventId) throws CustomException {
         String sql = "SELECT * FROM Event WHERE eventId = ?";
 
-        try{
+        try {
             List<Event> ls = jdbcTemplate.query(sql, new EventMapper(), eventId);
             if (ls.size() == 0) {
                 return null;
             } else {
                 return ls.get(0);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
 
     @Override
-    public <T> List<Event> getEventByAttribute(String attributeName, T attributeValue) throws CustomException
-    {
+    public <T> List<Event> getEventByAttribute(String attributeName, T attributeValue) throws CustomException {
         String sql = "SELECT * FROM Event WHERE " + attributeName + " = ?";
-        try{
+        try {
             return jdbcTemplate.query(sql, new EventMapper(), attributeValue);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
