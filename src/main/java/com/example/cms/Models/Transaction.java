@@ -17,7 +17,7 @@ public class Transaction {
     public Transaction() {
 
     }
-    
+
     public Transaction(int transactionId, Date date, Time time, String type, int amount, int userId, int eventId, String transactionImageUrl) {
         this.transactionId = transactionId;
         this.date = date;
