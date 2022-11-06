@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class VenueRepo implements VenueDAO{
+public class VenueRepo implements VenueDAO {
 
     JdbcTemplate jdbcTemplate;
 
@@ -27,12 +27,13 @@ public class VenueRepo implements VenueDAO{
             Venue venue = new Venue();
             venue.setVenueId(rs.getInt("venueId"));
             venue.setName(rs.getString("name"));
-            venue.setCapacity(rs.getInt("capacity"));
+            venue.setSilverSeats(rs.getInt("silverSeats"));
+            venue.setGoldSeats(rs.getInt("goldSeats"));
+            venue.setPlatinumSeats(rs.getInt("platinumSeats"));
             venue.setCity(rs.getString("city"));
             venue.setLandmark(rs.getString("landmark"));
             venue.setState(rs.getString("state"));
-            venue.setAvailable(rs.getBoolean("isFunctional"));
-            venue.setSeatMatrixDescription(rs.getString("seatMatrixDescription"));
+            venue.setFunctional(rs.getBoolean("isFunctional"));
             venue.setPicSeatMatrixUrl(rs.getString("picSeatMatrixUrl"));
             return venue;
         }
@@ -41,8 +42,8 @@ public class VenueRepo implements VenueDAO{
     @Override
     public Venue addVenue(Venue newVenue) throws CustomException {
         String sql =
-                "INSERT INTO Venue(name, capacity, city, landmark, state, " +
-                "isFunctional, seatMatrixDescription, picSeatMatrixUrl) VALUES(?,?,?,?,?,?,?,?)";
+                "INSERT INTO Venue(name, silverSeats, goldSeats, platinumSeats, city, landmark, state, " +
+                        "isFunctional, picSeatMatrixUrl) VALUES(?,?,?,?,?,?,?,?,?)";
 
         int isCreated;
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -51,23 +52,23 @@ public class VenueRepo implements VenueDAO{
             isCreated = jdbcTemplate.update(con -> {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, newVenue.getName());
-                ps.setInt(2, newVenue.getCapacity());
-                ps.setString(3, newVenue.getCity());
-                ps.setString(4, newVenue.getLandmark());
-                ps.setString(5, newVenue.getState());
-                ps.setBoolean(6, newVenue.isFunctional());
-                ps.setString(7, newVenue.getSeatMatrixDescription());
-                ps.setString(8, newVenue.getPicSeatMatrixUrl());
+                ps.setInt(2, newVenue.getSilverSeats());
+                ps.setInt(3, newVenue.getGoldSeats());
+                ps.setInt(4, newVenue.getPlatinumSeats());
+                ps.setString(5, newVenue.getCity());
+                ps.setString(6, newVenue.getLandmark());
+                ps.setString(7, newVenue.getState());
+                ps.setBoolean(8, newVenue.isFunctional());
+                ps.setString(9, newVenue.getPicSeatMatrixUrl());
 
                 return ps;
             }, keyHolder);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isCreated == 0 || keyHolder.getKey() == null){
+        if (isCreated == 0 || keyHolder.getKey() == null) {
             throw new CustomException("Venue not inserted");
         }
 
@@ -78,18 +79,18 @@ public class VenueRepo implements VenueDAO{
     @Override
     public Venue updateVenue(int venueId, Venue updatedVenue) throws CustomException {
         String sql = "UPDATE Venue " +
-                     "SET name = ?, capacity = ?, city = ?, landmark = ?, state = ?, isAvailable = ?, seatMatrixDescription = ?, picSeatMatrixUrl = ? " +
-                     "WHERE venueId = ?";
+                "SET name = ?, silverSeats= ?, goldSeats=?, platinumSeats=?, city = ?, landmark = ?, state = ?, isAvailable = ?, picSeatMatrixUrl = ? " +
+                "WHERE venueId = ?";
 
         int isUpdated;
         try {
-            isUpdated = jdbcTemplate.update(sql, updatedVenue.getName(), updatedVenue.getCapacity(), updatedVenue.getCity(), updatedVenue.getLandmark(),
-                    updatedVenue.getState(), updatedVenue.isFunctional(), updatedVenue.getSeatMatrixDescription(), updatedVenue.getPicSeatMatrixUrl(), venueId);
-        }catch (Exception e){
+            isUpdated = jdbcTemplate.update(sql, updatedVenue.getName(), updatedVenue.getSilverSeats(), updatedVenue.getGoldSeats(), updatedVenue.getPlatinumSeats(), updatedVenue.getCity(), updatedVenue.getLandmark(),
+                    updatedVenue.getState(), updatedVenue.isFunctional(), updatedVenue.getPicSeatMatrixUrl(), venueId);
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
-        if(isUpdated == 0){
+        if (isUpdated == 0) {
             throw new CustomException("Could not update venue with id " + venueId);
         }
         return updatedVenue;
@@ -100,10 +101,9 @@ public class VenueRepo implements VenueDAO{
         String sql = "DELETE FROM Venue WHERE venueId = ?";
 
         int isDeleted;
-        try{
+        try {
             isDeleted = jdbcTemplate.update(sql, venueId);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
@@ -120,15 +120,14 @@ public class VenueRepo implements VenueDAO{
     public Venue getVenueById(int venueId) throws CustomException {
         String sql = "SELECT * FROM Venue WHERE venueId = ?";
 
-        try{
+        try {
             List<Venue> ls = jdbcTemplate.query(sql, new VenueMapper(), venueId);
             if (ls.size() == 0) {
                 return null;
             } else {
                 return ls.get(0);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -136,10 +135,9 @@ public class VenueRepo implements VenueDAO{
     @Override
     public <T> List<Venue> getVenueByAttribute(String attributeName, T attributeValue) throws CustomException {
         String sql = "SELECT * FROM Venue WHERE " + attributeName + " = ?";
-        try{
+        try {
             return jdbcTemplate.query(sql, new VenueMapper(), attributeValue);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

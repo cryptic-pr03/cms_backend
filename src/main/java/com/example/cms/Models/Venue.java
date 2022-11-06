@@ -4,30 +4,30 @@ public class Venue {
 
     private int venueId;
     private String name;
-    private int capacity;
+
+    private int silverSeats;
+    private int goldSeats;
+    private int platinumSeats;
     private String city;
     private String landmark;
     private String state;
     private boolean isFunctional;
-    private String seatMatrixDescription;
     private String picSeatMatrixUrl;
 
     public Venue() {
 
     }
 
-    public Venue(
-            int venueId, String name, int capacity, String city, String landmark,
-            String state, boolean isFunctional, String seatMatrixDescription, String picSeatMatrixUrl
-    ){
+    public Venue(int venueId, String name, int silverSeat, int goldSeat, int platinumSeat, String city, String landmark, String state, boolean isFunctional, String picSeatMatrixUrl) {
         this.venueId = venueId;
         this.name = name;
-        this.capacity = capacity;
+        this.silverSeats = silverSeat;
+        this.goldSeats = goldSeat;
+        this.platinumSeats = platinumSeat;
         this.city = city;
         this.landmark = landmark;
         this.state = state;
         this.isFunctional = isFunctional;
-        this.seatMatrixDescription = seatMatrixDescription;
         this.picSeatMatrixUrl = picSeatMatrixUrl;
     }
 
@@ -47,12 +47,28 @@ public class Venue {
         this.name = name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getSilverSeats() {
+        return silverSeats;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setSilverSeats(int silverSeats) {
+        this.silverSeats = silverSeats;
+    }
+
+    public int getGoldSeats() {
+        return goldSeats;
+    }
+
+    public void setGoldSeats(int goldSeats) {
+        this.goldSeats = goldSeats;
+    }
+
+    public int getPlatinumSeats() {
+        return platinumSeats;
+    }
+
+    public void setPlatinumSeats(int platinumSeats) {
+        this.platinumSeats = platinumSeats;
     }
 
     public String getCity() {
@@ -79,21 +95,12 @@ public class Venue {
         this.state = state;
     }
 
-
     public boolean isFunctional() {
         return isFunctional;
     }
 
-    public void setAvailable(boolean availability) {
-        isFunctional = availability;
-    }
-
-    public String getSeatMatrixDescription() {
-        return seatMatrixDescription;
-    }
-
-    public void setSeatMatrixDescription(String seatMatrixDescription) {
-        this.seatMatrixDescription = seatMatrixDescription;
+    public void setFunctional(boolean functional) {
+        isFunctional = functional;
     }
 
     public String getPicSeatMatrixUrl() {
@@ -109,12 +116,13 @@ public class Venue {
         return "Venue{" +
                 "venueId=" + venueId +
                 ", name='" + name + '\'' +
-                ", capacity=" + capacity +
+                ", silverSeat=" + silverSeats +
+                ", goldSeat=" + goldSeats +
+                ", platinumSeat=" + platinumSeats +
                 ", city='" + city + '\'' +
                 ", landmark='" + landmark + '\'' +
                 ", state='" + state + '\'' +
                 ", isFunctional=" + isFunctional +
-                ", seatMatrixDescription='" + seatMatrixDescription + '\'' +
                 ", picSeatMatrixUrl='" + picSeatMatrixUrl + '\'' +
                 '}';
     }
