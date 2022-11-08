@@ -23,7 +23,7 @@ public class EventSeatController {
 
     @GetMapping("/{eventId}")
 //    @PreAuthorize("isAuthenticated()")
-    @PreAuthorize("isAnonymous()")
+    // @PreAuthorize("isAnonymous()")
     public ResponseEntity getEventSeatDetails(@PathVariable int eventId){
         try {
             return ResponseEntity.ok(eventSeatRepo.getEventSeatDetails(eventId));
@@ -84,3 +84,4 @@ public class EventSeatController {
         }
     }
 }
+

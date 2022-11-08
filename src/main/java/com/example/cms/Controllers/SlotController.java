@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/slot")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SlotController {
     @Autowired
     SlotDAO slotDAO;
@@ -56,11 +57,10 @@ public class SlotController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity slots(){
+    public ResponseEntity slots() {
         try {
             return ResponseEntity.ok(slotDAO.getAllSlots());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

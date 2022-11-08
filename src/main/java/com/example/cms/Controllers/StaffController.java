@@ -5,7 +5,9 @@ import com.example.cms.dao.CustomException;
 import com.example.cms.dao.StaffDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +20,19 @@ public class StaffController {
     private StaffDAO staffDAO;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('VENUE_MANAGER', 'ADMIN')")
-    public Staff addStaff(@RequestBody Staff staff) throws CustomException {
+    public ResponseEntity<?> addStaff(@RequestBody Staff staff) throws CustomException {
+//        List auths = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().toList();
+//        System.out.println(auths);
+//        if (auths.contains("ADMIN") || auths.contains("VENUE_MANAGER"))
         try {
-            return staffDAO.addStaff(staff);
+            System.out.println(staff);
+            Staff addedStaff = staffDAO.addStaff(staff);
+            return ResponseEntity.ok(addedStaff);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
+//            return ResponseEntity.internalServerError().body(e.getMessage());
         }
+//        else return ResponseEntity.badRequest().build();
     }
 
     @PutMapping

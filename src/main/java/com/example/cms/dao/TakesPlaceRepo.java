@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class TakesPlaceRepo implements TakesPlaceDAO{
+public class TakesPlaceRepo implements TakesPlaceDAO {
     private final JdbcTemplate jdbcTemplate;
 
     public TakesPlaceRepo(JdbcTemplate jdbcTemplate) {
@@ -40,12 +40,12 @@ public class TakesPlaceRepo implements TakesPlaceDAO{
         static Event getEvent(ResultSet rs) throws SQLException {
             Event event = new Event();
             event.setEventId(rs.getInt("eventId"));
-            event.setEventName(rs.getString("name"));
-            event.setEventStartTime(rs.getTime("startTime"));
-            event.setEventEndTime(rs.getTime("endTime"));
+            event.setName(rs.getString("name"));
+            event.setStartTime(rs.getTime("startTime"));
+            event.setEndTime(rs.getTime("endTime"));
             event.setEventDate(rs.getDate("eventDate"));
-            event.setEventAge(rs.getInt("ageLimit"));
-            event.setEventLogoUrl(rs.getString("logoUrl"));
+            event.setAgeLimit(rs.getInt("ageLimit"));
+            event.setLogoUrl(rs.getString("logoUrl"));
             return event;
         }
     }
@@ -56,18 +56,17 @@ public class TakesPlaceRepo implements TakesPlaceDAO{
         int isAdded;
         try {
             isAdded = jdbcTemplate.update(sql, newTakesPlace.getVenueId(), newTakesPlace.getSlotId(), newTakesPlace.getEventId());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
-        if(isAdded==0){
+        if (isAdded == 0) {
             throw new CustomException("Could not add event's occurrence place");
         }
         return newTakesPlace;
     }
 
     @Override
-    public List<Event> getEventsHeldInVenue(int venueId) throws CustomException{
+    public List<Event> getEventsHeldInVenue(int venueId) throws CustomException {
         String sql = "SELECT eventId FROM TakesPlace WHERE venueId = ?";
         List<Integer> eventIds = jdbcTemplate.queryForList(sql, Integer.class, venueId);
 //        System.out.println(eventIds);
@@ -80,8 +79,7 @@ public class TakesPlaceRepo implements TakesPlaceDAO{
                 eventList.add(event.get(0));
             }
             return eventList;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }
@@ -100,14 +98,12 @@ public class TakesPlaceRepo implements TakesPlaceDAO{
         try {
             ls = jdbcTemplate.queryForList(sql, Integer.class, eventId);
 
-            if(ls.size() == 0){
+            if (ls.size() == 0) {
                 throw new CustomException("Bad Request");
-            }
-            else{
+            } else {
                 return ls.get(0);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
     }

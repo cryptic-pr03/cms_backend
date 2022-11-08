@@ -53,6 +53,7 @@ public class EventController {
     @GetMapping("/all")
     public ResponseEntity getAllEvents() {
         try {
+            System.out.println("GETALLEVENTS");
             return ResponseEntity.ok(eventRepo.getAllEvents());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -63,6 +64,16 @@ public class EventController {
     public ResponseEntity eventById(@PathVariable int eventId) {
         try {
             return ResponseEntity.ok(eventRepo.getEventById(eventId));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/eventDetails/{eventId}")
+    public ResponseEntity eventDetails(@PathVariable int eventId) {
+        try {
+            System.out.println("getting event details");
+            return ResponseEntity.ok(eventRepo.getEventDetails(eventId));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }

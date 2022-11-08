@@ -27,13 +27,13 @@ public class EventRepo implements EventDAO {
         public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
             Event event = new Event();
             event.setEventId(rs.getInt("eventId"));
-            event.setEventName(rs.getString("name"));
-            event.setEventStartTime(rs.getTime("startTime"));
-            event.setEventEndTime(rs.getTime("endTime"));
+            event.setName(rs.getString("name"));
+            event.setStartTime(rs.getTime("startTime"));
+            event.setEndTime(rs.getTime("endTime"));
             event.setEventDate(rs.getDate("eventDate"));
-            event.setEventAge(rs.getInt("ageLimit"));
+            event.setAgeLimit(rs.getInt("ageLimit"));
             event.setDescription(rs.getString("description"));
-            event.setEventLogoUrl(rs.getString("logoUrl"));
+            event.setLogoUrl(rs.getString("logoUrl"));
             return event;
         }
     }
@@ -48,13 +48,13 @@ public class EventRepo implements EventDAO {
 
             isCreated = jdbcTemplate.update(con -> {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, newEvent.getEventName());
-                ps.setTime(2, newEvent.getEventStartTime());
-                ps.setTime(3, newEvent.getEventEndTime());
+                ps.setString(1, newEvent.getName());
+                ps.setTime(2, newEvent.getStartTime());
+                ps.setTime(3, newEvent.getEndTime());
                 ps.setDate(4, newEvent.getEventDate());
-                ps.setInt(5, newEvent.getEventAge());
+                ps.setInt(5, newEvent.getAgeLimit());
                 ps.setString(6, newEvent.getDescription());
-                ps.setString(7, newEvent.getEventLogoUrl());
+                ps.setString(7, newEvent.getLogoUrl());
 
                 return ps;
             }, keyHolder);
@@ -79,8 +79,8 @@ public class EventRepo implements EventDAO {
 
         int isUpdated;
         try {
-            isUpdated = jdbcTemplate.update(sql, updatedEvent.getEventName(), updatedEvent.getEventStartTime(), updatedEvent.getEventEndTime(),
-                    updatedEvent.getEventDate(), updatedEvent.getEventAge(), updatedEvent.getDescription(), updatedEvent.getEventLogoUrl(), eventId);
+            isUpdated = jdbcTemplate.update(sql, updatedEvent.getName(), updatedEvent.getStartTime(), updatedEvent.getEndTime(),
+                    updatedEvent.getEventDate(), updatedEvent.getAgeLimit(), updatedEvent.getDescription(), updatedEvent.getLogoUrl(), eventId);
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
@@ -125,6 +125,27 @@ public class EventRepo implements EventDAO {
             List<String> sp = jdbcTemplate.queryForList("SELECT sponsorName FROM Sponsor WHERE eventId = ?", String.class, eventId);
             obj.put("sponsors", sp);
         }
+
+        return res;
+    }
+
+
+    @Override
+    public Map<String, Object> getEventDetails(int eventId) {
+
+        System.out.println(eventId);
+        // add v.seatMatrixDescription e.description
+        String sql =
+                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit, description,eventDate, " +
+                        "logoUrl, venueId, v.name AS venueName, (silverSeats + goldSeats + platinumSeats) as capacity, city, landmark, " +
+                        "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
+                        "contactNo FROM Event e, Venue v, User u WHERE e.eventId = ? AND u.userId =" +
+                        "(SELECT userId FROM Transaction tr WHERE tr.eventId = e.eventId AND type LIKE 'ARTIST_MANAGER') " +
+                        "AND v.venueId = (SELECT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId)";
+        Map<String, Object> res = jdbcTemplate.queryForMap(sql, eventId);
+
+        List<String> sp = jdbcTemplate.queryForList("SELECT sponsorName FROM Sponsor WHERE eventId = ?", String.class, eventId);
+        res.put("sponsors", sp);
 
         return res;
     }

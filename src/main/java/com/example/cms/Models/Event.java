@@ -29,7 +29,7 @@ public class Event {
         this.logoUrl = logoUrl;
     }
 
-    public int getEventId(){
+    public int getEventId() {
         return eventId;
     }
 
@@ -37,43 +37,43 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public String getEventName(){
+    public String getName() {
         return name;
     }
 
-    public void setEventName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Time getEventStartTime(){
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setEventStartTime(Time startTime){
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEventEndTime(){
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEventEndTime(Time endTime){
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 
-    public Date getEventDate(){
+    public Date getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Date eventDate){
+    public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
-    public int getEventAge(){
+    public int getAgeLimit() {
         return ageLimit;
     }
 
-    public void setEventAge(int age){
+    public void setAgeLimit(int age) {
         this.ageLimit = age;
     }
 
@@ -85,11 +85,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getEventLogoUrl(){
+    public String getLogoUrl() {
         return logoUrl;
     }
 
-    public void setEventLogoUrl(String logoUrl){
+    public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
 
