@@ -12,4 +12,5 @@ public interface WorksForDAO {
     List<Integer> getEventsByStaffId(int staffId);
 
     void assignWork(int eventId, int groupNo);
+    public Integer addWorksForAllStaffGno(Map<String, Integer> staff) throws CustomException;
 }

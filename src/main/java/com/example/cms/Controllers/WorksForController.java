@@ -8,9 +8,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/worksFor")
+@CrossOrigin(origins = "http://localhost:3000")
 public class WorksForController {
     private final WorksForDAO worksForRepo;
 
@@ -18,7 +20,7 @@ public class WorksForController {
         this.worksForRepo = worksForRepo;
     }
 
-    @PostMapping()
+    @PostMapping("/")
     public WorksFor addWorksFor(@RequestBody WorksFor worksFor) throws CustomException {
         try {
             return worksForRepo.addWorksFor(worksFor);
@@ -64,5 +66,15 @@ public class WorksForController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/addAllStaffGno")
+    public Integer addWorksForAllStaffGno(@RequestBody Map<String, Integer> staff) throws CustomException {
+      try {
+        System.out.println(staff);
+        return worksForRepo.addWorksForAllStaffGno(staff);
+      } catch (Exception e) {
+        throw new CustomException(e.getMessage());
+      }
     }
 }
