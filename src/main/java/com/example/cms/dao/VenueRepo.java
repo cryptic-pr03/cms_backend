@@ -4,6 +4,8 @@ import com.example.cms.Models.Venue;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class VenueRepo implements VenueDAO {
@@ -112,7 +115,9 @@ public class VenueRepo implements VenueDAO {
 
     @Override
     public List<Venue> getAllVenues() {
+        List ls = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().toList();
         String sql = "SELECT * FROM Venue";
+        if(ls.contains("ARTIST_MANAGER")) sql  = sql + " WHERE isFunctional = TRUE";
         return jdbcTemplate.query(sql, new VenueMapper());
     }
 
@@ -140,5 +145,15 @@ public class VenueRepo implements VenueDAO {
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
+    }
+
+    @Override
+    public Map<String, Object> getVenueAndSeats(int venueId) {
+        String sql = "SELECT * FROM Venue WHERE venueId = ?";
+
+        Map<String, Object> res = jdbcTemplate.queryForMap(sql, venueId);
+
+        res.put("seats", jdbcTemplate.queryForList("SELECT * FROM Seat WHERE venueId = ?", venueId));
+        return res;
     }
 }

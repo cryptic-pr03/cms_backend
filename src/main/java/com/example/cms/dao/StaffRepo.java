@@ -48,7 +48,7 @@ public class StaffRepo implements StaffDAO{
     @Override
     public Staff addStaff(Staff newStaff) throws CustomException {
         //null  bank name, branch name
-        String querySQL = "INSERT INTO Staff ( firstName, lastName,email ,password ,contactNo,gender,DOB,role,groupNumber,salary,venueId,joiningDate,leavingDate,accountNo,IFSCCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String querySQL = "INSERT INTO Staff ( firstName, lastName,email ,contactNo,gender,DOB,role,groupNumber,salary,venueId,joiningDate,leavingDate,accountNo,IFSCCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         int isCreated ;
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -59,18 +59,17 @@ public class StaffRepo implements StaffDAO{
                 ps.setString(1 , newStaff.getFirstName());
                 ps.setString(2 , newStaff.getLastName());
                 ps.setString(3 , newStaff.getEmail());
-                ps.setString(4 , newStaff.getPassword());
-                ps.setString(5 , newStaff.getContactNo());
-                ps.setString(6 , newStaff.getGender());
-                ps.setDate(7,newStaff.getDOB());
-                ps.setInt(8,newStaff.getRole());
-                ps.setInt(9,newStaff.getGroupNumber());
-                ps.setInt(10,newStaff.getSalary());
-                ps.setInt(11,newStaff.getVenueId());
-                ps.setDate(12,newStaff.getJoiningDate());
-                ps.setDate(13,newStaff.getLeavingDate());
-                ps.setString(14,newStaff.getAccountNo());
-                ps.setString(15,newStaff.getIFSCCode());
+                ps.setString(4 , newStaff.getContactNo());
+                ps.setString(5 , newStaff.getGender());
+                ps.setDate(6,newStaff.getDOB());
+                ps.setInt(7,newStaff.getRole());
+                ps.setInt(8,newStaff.getGroupNumber());
+                ps.setInt(9,newStaff.getSalary());
+                ps.setInt(10,newStaff.getVenueId());
+                ps.setDate(11,newStaff.getJoiningDate());
+                ps.setDate(12,newStaff.getLeavingDate());
+                ps.setString(13,newStaff.getAccountNo());
+                ps.setString(14,newStaff.getIFSCCode());
 
                 return ps;
             } , keyHolder);

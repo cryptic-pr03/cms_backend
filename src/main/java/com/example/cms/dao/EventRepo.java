@@ -69,6 +69,7 @@ public class EventRepo implements EventDAO {
         }
 
         newEvent.setEventId(keyHolder.getKey().intValue());
+//        System.out.println(newEvent);
         return newEvent;
     }
 
@@ -112,14 +113,14 @@ public class EventRepo implements EventDAO {
     public List<Map<String, Object>> getAllEvents() {
         List<Map<String, Object>> res;
 
-        // add v.seatMatrixDescription e.description
         String sql =
-                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit, description, " +
-                "logoUrl, venueId, v.name AS venueName, capacity, city, landmark, " +
-                "state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
+                "SELECT eventId, e.name AS eventName, startTime, endTime, ageLimit, eventDate, description, " +
+                "logoUrl, venueId, v.name AS venueName, (silverSeats + goldSeats + platinumSeats) AS capacity, city, " +
+                "landmark, state, isFunctional, picSeatMatrixUrl, userId, firstName, lastName, email, " +
                 "contactNo FROM Event e, Venue v, User u WHERE u.userId = " +
                 "(SELECT userId FROM Transaction tr WHERE tr.eventId = e.eventId AND type LIKE 'ARTIST_MANAGER') " +
-                "AND v.venueId = (SELECT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId)";
+                "AND v.venueId = (SELECT DISTINCT tp.venueId FROM TakesPlace tp WHERE tp.eventId = e.eventId) " +
+                "ORDER BY eventDate DESC";
 
         res = jdbcTemplate.queryForList(sql);
 

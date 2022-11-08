@@ -1,5 +1,7 @@
 package com.example.cms.Security;
 
+import com.example.cms.dao.CustomException;
+import com.example.cms.dao.StaffDAO;
 import com.example.cms.dao.TypeUserDAO;
 import com.example.cms.dao.UserDAO;
 import io.jsonwebtoken.*;
@@ -13,24 +15,27 @@ import java.util.Date;
 public class JwtUtil {
 
     private final UserDAO userRepo;
-
+    private final StaffDAO staffRepo;
     private final TypeUserDAO typeUserRepo;
 
     private final String jwtSecret = "DbmsProjectKey";
 
-    public JwtUtil(UserDAO userRepo, TypeUserDAO typeUserRepo) {
+    public JwtUtil(UserDAO userRepo, StaffDAO staffRepo, TypeUserDAO typeUserRepo) {
         this.userRepo = userRepo;
+        this.staffRepo = staffRepo;
         this.typeUserRepo = typeUserRepo;
     }
 
-    public String generateToken(Authentication authentication, int userId, int typeUserCode) {
+    public String generateToken(Authentication authentication, int userId, int typeUserCode) throws CustomException {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
 
         int jwtExpirationMs = 5 * 60 * 60;
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setSubject(username)
                 .claim("typeUserCode", typeUserCode)
                 .claim("userId", userId)
+                .claim("user", (typeUserCode < 3 ? userRepo.getUserByEmailId(username) : staffRepo.getStaffByEmailId(username)))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
