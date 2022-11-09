@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 public class Salary {
     private int staffId;
     private Timestamp timeOfPayment;
-    private int amount;
     private int bonus;
     private Boolean paidStatus;
 
@@ -13,10 +12,9 @@ public class Salary {
 
     }
 
-    public Salary(int staffId, Timestamp timeOfPayment, int amount, int bonus, Boolean paidStatus) {
+    public Salary(int staffId, Timestamp timeOfPayment, int bonus, Boolean paidStatus) {
         this.staffId = staffId;
         this.timeOfPayment = timeOfPayment;
-        this.amount = amount;
         this.bonus = bonus;
         this.paidStatus = paidStatus;
     }
@@ -26,7 +24,6 @@ public class Salary {
         return "Salary{" +
                 "staffId=" + staffId +
                 ", timeOfPayment=" + timeOfPayment +
-                ", amount=" + amount +
                 ", bonus=" + bonus +
                 ", paidStatus=" + paidStatus +
                 '}';
@@ -47,14 +44,6 @@ public class Salary {
     public void setTimeOfPayment(Timestamp timeOfPayment) {
         this.timeOfPayment = timeOfPayment;
 
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public int getBonus() {

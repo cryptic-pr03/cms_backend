@@ -1,7 +1,7 @@
 package com.example.cms.Models;
 
 public class WorksFor {
-    private int userId;
+    private int staffId;
 
     private int eventId;
 
@@ -9,26 +9,26 @@ public class WorksFor {
 
     }
 
-    public WorksFor(int userId, int role, int eventId) {
-        this.userId = userId;
+    public WorksFor(int staffId, int role, int eventId) {
+        this.staffId = staffId;
         this.eventId = eventId;
     }
 
     @Override
     public String toString() {
         return "WorksFor{" +
-                "userId=" + userId +
+                "userId=" + staffId +
                 ", eventId=" + eventId +
                 '}';
     }
 
 
-    public int getUserId() {
-        return userId;
+    public int getStaffId() {
+        return staffId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 
     public int getEventId() {

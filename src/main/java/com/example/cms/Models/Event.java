@@ -11,23 +11,25 @@ public class Event {
     private Time endTime;
     private int ageLimit;
     private Date eventDate;
+    private String description;
     private String logoUrl;
 
     public Event() {
 
     }
 
-    public Event(int eventId, String name, Time startTime, Time endTime, int ageLimit, Date eventDate, String logoUrl) {
+    public Event(int eventId, String name, Time startTime, Time endTime, int ageLimit, Date eventDate, String eventDesc, String logoUrl) {
         this.eventId = eventId;
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.ageLimit = ageLimit;
         this.eventDate = eventDate;
+        this.description = eventDesc;
         this.logoUrl = logoUrl;
     }
 
-    public int getEventId(){
+    public int getEventId() {
         return eventId;
     }
 
@@ -35,51 +37,59 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public String getEventName(){
+    public String getName() {
         return name;
     }
 
-    public void setEventName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Time getEventStartTime(){
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setEventStartTime(Time startTime){
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEventEndTime(){
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEventEndTime(Time endTime){
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 
-    public Date getEventDate(){
+    public Date getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Date eventDate){
+    public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
-    public int getEventAge(){
+    public int getAgeLimit() {
         return ageLimit;
     }
 
-    public void setEventAge(int age){
+    public void setAgeLimit(int age) {
         this.ageLimit = age;
     }
 
-    public String getEventLogoUrl(){
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLogoUrl() {
         return logoUrl;
     }
 
-    public void setEventLogoUrl(String logoUrl){
+    public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
 
@@ -92,6 +102,7 @@ public class Event {
                 ", endTime=" + endTime +
                 ", ageLimit=" + ageLimit +
                 ", eventDate=" + eventDate +
+                ", description='" + description + '\'' +
                 ", logoUrl='" + logoUrl + '\'' +
                 '}';
     }

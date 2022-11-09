@@ -3,13 +3,13 @@ package com.example.cms.Models;
 public class SeatBook {
     private int eventId;
     private int seatId;
-    private int transactionId;
+    private String transactionId;
 
     public SeatBook() {
 
     }
 
-    public SeatBook(int eventId, int seatId, int transactionId) {
+    public SeatBook(int eventId, int seatId, String transactionId) {
         this.eventId = eventId;
         this.seatId = seatId;
         this.transactionId = transactionId;
@@ -41,11 +41,11 @@ public class SeatBook {
         this.seatId = seatId;
     }
 
-    public int getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 }

@@ -1,16 +1,16 @@
 package com.example.cms.Models;
 
-public class EventSeatStatus {
+public class EventSeat {
     private int seatId;
     private int eventId;
     private boolean isBooked;
     private int price;
 
-    public EventSeatStatus() {
+    public EventSeat() {
 
     }
 
-    public EventSeatStatus(int seatId, int eventId, boolean isBooked, int price) {
+    public EventSeat(int seatId, int eventId, boolean isBooked, int price) {
         this.seatId = seatId;
         this.eventId = eventId;
         this.isBooked = isBooked;

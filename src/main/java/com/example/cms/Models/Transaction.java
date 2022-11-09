@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class Transaction {
 
-    private int transactionId;
+    private String transactionId;
     private Date date;
     private Time time;
     private String type;
@@ -17,8 +17,8 @@ public class Transaction {
     public Transaction() {
 
     }
-    
-    public Transaction(int transactionId, Date date, Time time, String type, int amount, int userId, int eventId, String transactionImageUrl) {
+
+    public Transaction(String transactionId, Date date, Time time, String type, int amount, int userId, int eventId, String transactionImageUrl) {
         this.transactionId = transactionId;
         this.date = date;
         this.time = time;
@@ -29,11 +29,11 @@ public class Transaction {
         this.transactionImageUrl = transactionImageUrl;
     }
 
-    public int getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 
