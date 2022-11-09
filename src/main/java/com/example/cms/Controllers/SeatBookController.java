@@ -14,9 +14,9 @@ public class SeatBookController {
     SeatBookDAO seatBookDAO;
 
     @GetMapping("/transactionId/{eventId}/{seatId}")
-    public int getTrxnId(@PathVariable int eventId, @PathVariable int seatId) throws CustomException {
+    public String getTrxnId(@PathVariable int eventId, @PathVariable int seatId) throws CustomException {
         try {
-            int transactionId = seatBookDAO.getTrxnId(eventId, seatId);
+            String transactionId = seatBookDAO.getTrxnId(eventId, seatId);
             return transactionId;
         } catch (Exception e) {
             throw new CustomException(e.getMessage());

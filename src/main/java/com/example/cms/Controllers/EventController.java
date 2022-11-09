@@ -3,6 +3,7 @@ package com.example.cms.Controllers;
 import com.example.cms.Models.Event;
 import com.example.cms.dao.EventDAO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +18,11 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity addEvent(@RequestBody Event event) {
+    @PreAuthorize("hasAnyAuthority('VENUE_MANAGER', 'ADMIN')")
+    public ResponseEntity<?> addEvent(@RequestBody Event event) {
+      System.out.println("addevent");
+      System.out.println(event);
+    // public ResponseEntity addEvent(@RequestBody Event event) {
 
         try {
             Event addedEvent = eventRepo.addEvent(event);

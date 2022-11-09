@@ -27,7 +27,7 @@ public class SlotController {
         }
     }
 
-    @DeleteMapping("/delete/{venueId}/{slotId}/{slotDate}")
+    @DeleteMapping("/{venueId}/{slotId}/{slotDate}")
     public Boolean deleteSlot(@PathVariable int venueId, @PathVariable int slotId, @PathVariable Date slotDate) throws CustomException {
         try {
             return slotDAO.deleteSlot(venueId, slotId, slotDate);

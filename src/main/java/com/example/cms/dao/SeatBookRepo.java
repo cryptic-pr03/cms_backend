@@ -18,7 +18,7 @@ public class SeatBookRepo implements SeatBookDAO {
             SeatBook seatBook = new SeatBook();
             seatBook.setSeatId(rs.getInt("seatId"));
             seatBook.seteventId(rs.getInt("eventId"));
-            seatBook.setTransactionId(rs.getInt("transactionId"));
+            seatBook.setTransactionId(rs.getString("transactionId"));
             return seatBook;
         }
     }
@@ -41,7 +41,7 @@ public class SeatBookRepo implements SeatBookDAO {
     }
 
     @Override
-    public int getTrxnId(int eventId, int seatId) throws CustomException {
+    public String getTrxnId(int eventId, int seatId) throws CustomException {
         String querySQL = "SELECT * FROM SeatBook WHERE eventId=? AND seatId=?";
         try{
             List<SeatBook> ls = jdbcTemplate.query(querySQL , new SeatBookRepoMapper() , eventId , seatId);

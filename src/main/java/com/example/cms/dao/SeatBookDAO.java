@@ -4,5 +4,5 @@ import com.example.cms.Models.SeatBook;
 
 public interface SeatBookDAO {
     SeatBook addSeatBook(SeatBook newSeatBook) throws CustomException;
-    int getTrxnId(int eventId, int seatId) throws CustomException;
+    String getTrxnId(int eventId, int seatId) throws CustomException;
 }

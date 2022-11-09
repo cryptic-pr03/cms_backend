@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/eventSeat")
-@PreAuthorize("isAuthenticated()")
+// @PreAuthorize("isAuthenticated()")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EventSeatController {
 

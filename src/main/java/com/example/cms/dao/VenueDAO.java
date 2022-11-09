@@ -3,6 +3,7 @@ package com.example.cms.dao;
 import com.example.cms.Models.Venue;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VenueDAO {
 
@@ -18,4 +19,6 @@ public interface VenueDAO {
 
     Venue getVenueById(int venueId) throws CustomException;
     <T> List<Venue> getVenueByAttribute(String attributeName, T attributeValue) throws CustomException;
+    
+    Map<String, Object> getVenueAndSeats(int venueId);
 }
