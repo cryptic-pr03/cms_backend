@@ -21,7 +21,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/transaction")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class TransactionController {
 
   private final TransactionDAO transactionDAO;
