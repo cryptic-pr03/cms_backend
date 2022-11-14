@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class UserController {
     private final UserDAO userRepo;
     private final StaffDAO staffRepo;
