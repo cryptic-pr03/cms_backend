@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/slot")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class SlotController {
     @Autowired
     SlotDAO slotDAO;
