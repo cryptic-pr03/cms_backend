@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/staff")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class StaffController {
     @Autowired
     private StaffDAO staffDAO;
