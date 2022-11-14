@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eventSeat")
 // @PreAuthorize("isAuthenticated()")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class EventSeatController {
 
     private final EventSeatDAO eventSeatRepo;
