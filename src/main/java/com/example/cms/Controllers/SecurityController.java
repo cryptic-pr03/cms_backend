@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class SecurityController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authManager;
