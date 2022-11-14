@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/worksFor")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://cms-frontend-tau.vercel.app/"})
 public class WorksForController {
     private final WorksForDAO worksForRepo;
 
